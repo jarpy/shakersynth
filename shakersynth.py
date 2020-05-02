@@ -17,4 +17,5 @@ rotor = RotorSynth(server)
 
 while True:
     telemetry = receiver.get_telemetry()
-    rotor.update(telemetry)
+    if telemetry:
+        rotor.update(telemetry)
