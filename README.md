@@ -7,7 +7,7 @@ enabling it to create sounds that are dynamically derived from DCS telemetry
 data.
 
 A nice example is helicopter rotor vibrations. Unlike with a pre-recorded
-sample, Shakersynth constantly adjusts the speed of the rotor vibration to match
+sample, Shakersynth constantly adjusts the speed of the vibration to match
 the rotor in the simulator, so you can feel each blade as it passes overhead.
 
 Currently, Shakersynth provides _only_ rotor vibrations for the Mi-8 and UH-1H. It's best to run it alongside SimShaker Sound Module, which does a good job of handling a wide range of effects that don't benefit so much from the parametric approach.
