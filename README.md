@@ -3,7 +3,8 @@
 Shakersynth is an alternative approach to driving tactile transducers (aka. bass
 shakers) from DCS World. Existing solutions use pre-recorded sound samples as
 their audio source. Shakersynth uses parametric real-time audio synthesis,
-enabling it to create sounds that dynamically derived from DCS telemetry data.
+enabling it to create sounds that are dynamically derived from DCS telemetry
+data.
 
 A nice example is helicopter rotor vibrations. Unlike with a pre-recorded
 sample, Shakersynth constantly adjusts the speed of the rotor vibration to match
