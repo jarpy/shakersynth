@@ -5,9 +5,10 @@ import platform
 
 
 class SimShakerReceiver():
-    def __init__(self):
-        self.listener = socket.socket(type=socket.SOCK_DGRAM)
-        self.listener.bind(('localhost', 29377))
+    def __init__(self, port=29377):
+        if port is not None:
+            self.listener = socket.socket(type=socket.SOCK_DGRAM)
+            self.listener.bind(('localhost', port))
         self.counter = 0
 
     def get_telemetry(self):
@@ -26,7 +27,12 @@ class SimShakerReceiver():
             # Probably a "start" or "stop" message.
             return {}
 
-        telemetry["rotor_rpm"], telemetry["rotor_rpm_percent"] = self.calculate_rotor_rpm(telemetry["module"], simshaker)
+        try:
+            telemetry["rotor_rpm_percent"] = float(simshaker["RotorRPM"])
+        except KeyError:
+            telemetry["rotor_rpm_percent"] = 0.00000001
+
+        telemetry["rotor_rpm"] = self.calculate_rotor_rpm(telemetry)
 
         if self.counter == 0:
             print(json.dumps(telemetry, indent=4))
@@ -57,24 +63,17 @@ class SimShakerReceiver():
 
         return simshaker_telemetry
 
-    def calculate_rotor_rpm(self, module, simshaker):
-        try:
-            gauge_rpm = float(simshaker["RotorRPM"])
-        except KeyError:
-            gauge_rpm = 0.0
-
-        # Protect against divide by zero.
-        gauge_rpm = max(gauge_rpm, 0.0000001)
+    def calculate_rotor_rpm(self, telemetry):
+        module = telemetry["module"]
+        rpm_percent = telemetry["rotor_rpm_percent"]
 
         if(module == "Mi-8"):
             # 95 gauge RPM == 192 real rotor RPM.
             # REF: http://koavia.com/eng/product/helicopter/hvostovye_valy.shtml#2
             # REF: https://www.pprune.org/rotorheads/221789-mil-8-mtv-mtv-1-info.html
-            real_rpm = gauge_rpm * 2.02105
-            rotor_rpm = real_rpm
+            rpm = rpm_percent * 2.02105
         elif(module == "UH-1H"):
             # 90 gauge RPM == 324 real rotor RPM.
-            real_rpm = gauge_rpm * 3.6
-            rotor_rpm = real_rpm
+            rpm = rpm_percent * 3.6
 
-        return rotor_rpm, gauge_rpm
+        return rpm
