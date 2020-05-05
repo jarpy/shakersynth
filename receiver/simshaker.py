@@ -1,6 +1,8 @@
 import socket
 import os
 import json
+import platform
+
 
 class SimShakerReceiver():
     def __init__(self):
@@ -48,7 +50,8 @@ class SimShakerReceiver():
                 pass
 
         if self.counter == 0:
-            os.system("cls")
+            if platform.system() == "Windows":
+                os.system("cls")
             for element in elements:
                 print(element)
 
