@@ -1,7 +1,11 @@
+import logging
 import platform
 import pyo
-from receiver.simshaker import SimShakerReceiver
-from synth.rotor import RotorSynth
+from shakersynth.aircraft.aircraft import Aircraft
+from shakersynth.receiver.simshaker import SimShakerReceiver
+from logging import info
+
+logging.basicConfig(level=logging.INFO)
 
 # Audio synthesis setup.
 server = pyo.Server(duplex=0)
@@ -21,13 +25,22 @@ else:
 server.boot()
 server.start()
 
+# A little state machine
+aircraft = None
+
 # Receive Telemetry in SimShaker format (for now).
 receiver = SimShakerReceiver()
 
-# Create a synthesizer for main rotor vibrations.
-rotor = RotorSynth(server)
-
 while True:
     telemetry = receiver.get_telemetry()
-    if telemetry:
-        rotor.update(telemetry)
+
+    if telemetry and aircraft is None:
+        info("Starting new aircraft: %s" % telemetry["module"])
+        aircraft = Aircraft(server)
+        aircraft.update(telemetry)
+    elif telemetry and aircraft:
+        aircraft.update(telemetry)
+    elif not telemetry:
+        info("Shutting down aircraft: %s" % aircraft["module"])
+        del(aircraft)  # To stop all attached synths.
+        aircraft = None
