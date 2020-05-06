@@ -1,0 +1,28 @@
+import setuptools
+
+with open("README.md", "r") as readme:
+    long_description = readme.read()
+
+setuptools.setup(
+    name="Shakersynth",
+    version="0.0.1",
+    author="Toby McLaughlin",
+    author_email="toby@jarpy.net",
+    description="Bass shaker synthesizer for DCS World.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url="https://github.com/jarpy/shakersynth",
+    packages=setuptools.find_packages(),
+    classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
+        "Environment :: Console",
+        "Intended Audience :: End Users/Desktop",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python :: 3",
+        "Topic :: Games/Entertainment :: Simulation",
+        "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
+    ],
+    python_requires='>=3.7',
+)
