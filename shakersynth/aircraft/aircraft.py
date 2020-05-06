@@ -21,12 +21,14 @@ class Aircraft():
         rpm_percent = self.data["rotor_rpm_percent"]
 
         if(module == "Mi-8"):
-            # 95 gauge RPM == 192 real rotor RPM.
-            # REF: http://koavia.com/eng/product/helicopter/hvostovye_valy.shtml#2
-            # REF: https://www.pprune.org/rotorheads/221789-mil-8-mtv-mtv-1-info.html
-            rpm = rpm_percent * 2.02105
+            # 95 gauge RPM == 192 real rotor RPM. [1, 2]
+            return rpm_percent * 2.02105
         elif(module == "UH-1H"):
-            # 90 gauge RPM == 324 real rotor RPM.
-            rpm = rpm_percent * 3.6
+            # 90 gauge RPM == 324 real rotor RPM. [3]
+            return rpm_percent * 3.6
+        else:
+            return 0.00000001
 
-        return rpm
+# 1. http://koavia.com/eng/product/helicopter/hvostovye_valy.shtml#2
+# 2. https://www.pprune.org/rotorheads/221789-mil-8-mtv-mtv-1-info.html
+# 3. https://apps.dtic.mil/dtic/tr/fulltext/u2/901787.pdf
