@@ -1,4 +1,5 @@
 import pyo
+from shakersynth.config import config
 
 
 class RotorSynth():
@@ -34,14 +35,17 @@ class RotorSynth():
     def update(self, telemetry):
         """Update synth parameters based on telemetry."""
         rpm = telemetry["rotor_rpm"]
+        if rpm == 0:
+            rpm = 0.00000001
+
         module = telemetry["module"]
 
         # Revolutions per second is more useful than RPM.
         revolutions_per_second = rpm / 60.0
 
-        if(module == "Mi-8"):
+        if(module == "mi-8"):
             blade_count = 5
-        elif(module == "UH-1H"):
+        elif(module == "uh-1h"):
             blade_count = 2
 
         blades_per_second = revolutions_per_second * blade_count
@@ -50,10 +54,10 @@ class RotorSynth():
         # Set the synth pulse interval to trigger for each passing blade.
         self.lfo.setTime(blade_period)
 
-        # Get louder, as well as faster with rising rotor RPM, with an
+        # Get louder, as well as faster with rising rotor RPM, with a
         # fractional exponential curve so you can still feel the signal at
         # lower RPMs.
-        shake_volume = (telemetry["rotor_rpm_percent"] / 100) ** (1/3)
+        shake_volume = (((telemetry["rotor_rpm_percent"] / 100) ** 0.6) * config.global_volume)
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
 

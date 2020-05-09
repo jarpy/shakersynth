@@ -21,10 +21,10 @@ class Aircraft():
         module = self.data["module"]
         rpm_percent = self.data["rotor_rpm_percent"]
 
-        if(module == "Mi-8"):
+        if(module == "mi-8"):
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
             return rpm_percent * 2.02105
-        elif(module == "UH-1H"):
+        elif(module == "uh-1h"):
             # 90 gauge RPM == 324 real rotor RPM. [3]
             return rpm_percent * 3.6
         else:

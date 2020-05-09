@@ -10,7 +10,7 @@ from logging import info
 logging.basicConfig(level=logging.INFO)
 
 # Audio synthesis setup.
-server = pyo.Server(duplex=0)
+server = pyo.Server(duplex=0, buffersize=1024)
 
 if platform.system() == "Windows":
     # Running for real with DCS, so ask which sound device has the bass shakers
@@ -27,12 +27,11 @@ else:
 server.boot()
 server.start()
 
-# A little state machine
-aircraft = None
-
 # Receive Telemetry in SimShaker format (for now).
 receiver = SimShakerReceiver()
 
+# A little state machine
+aircraft = None
 while True:
     telemetry = receiver.get_telemetry()
 
@@ -42,7 +41,7 @@ while True:
         aircraft.update(telemetry)
     elif telemetry and aircraft:
         aircraft.update(telemetry)
-    elif not telemetry:
+    elif aircraft and not telemetry:
         info("Shutting down aircraft: %s" % aircraft["module"])
         del(aircraft)  # To stop all attached synths.
         aircraft = None

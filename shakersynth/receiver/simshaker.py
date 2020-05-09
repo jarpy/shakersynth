@@ -16,17 +16,25 @@ class SimShakerReceiver():
         simshaker = self.parse(message.decode())
 
         telemetry = {}
+
+        # Module name
         try:
-            telemetry["module"] = simshaker["N"]
+            module = simshaker["N"].lower()
         except KeyError:
             # Not a telemetry packet from SimShaker.
             # Probably a "start" or "stop" message.
             return {}
+        if module == "mi-8mt":
+            telemetry["module"] = "mi-8"
+        else:
+            telemetry["module"] = module
 
+        # Rotor RPM
         try:
-            telemetry["rotor_rpm_percent"] = float(simshaker["RotorRPM"])
+            rpm_percent = float(simshaker["RotorRPM"])
         except KeyError:
-            telemetry["rotor_rpm_percent"] = 0.00000001
+            rpm_percent = 0.0
+        telemetry["rotor_rpm_percent"] = rpm_percent
 
         return telemetry
 

@@ -12,7 +12,7 @@ def aircraft():
 
 def test_get_rotor_rpm_is_correct_for_mi8(aircraft):
     telemetry = {
-        "module": "Mi-8",
+        "module": "mi-8",
         "rotor_rpm_percent": 95.0
     }
     aircraft.update(telemetry)
@@ -22,7 +22,7 @@ def test_get_rotor_rpm_is_correct_for_mi8(aircraft):
 
 def test_calculate_rotor_rpm_is_correct_for_huey(aircraft):
     telemetry = {
-        "module": "UH-1H",
+        "module": "uh-1h",
         "rotor_rpm_percent": 90.0
     }
     aircraft.update(telemetry)
