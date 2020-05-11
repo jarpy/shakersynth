@@ -66,6 +66,6 @@ class RotorSynth():
         self.vca1.setMul(shake_volume)
 
         # Lower RPM means slower blades, so each "shake" should last longer.
-        shake_duration = blade_period / 7
+        shake_duration = blade_period / 6
         self.vca0.setDur(shake_duration)
         self.vca1.setDur(shake_duration)
