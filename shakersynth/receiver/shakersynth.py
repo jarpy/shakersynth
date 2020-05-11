@@ -1,8 +1,7 @@
-
 import logging
 import socket
 import yaml
-from func_timeout import func_set_timeout, FunctionTimedOut
+from func_timeout import func_set_timeout, FunctionTimedOut  # type: ignore
 from logging import debug
 from shakersynth.config import config
 
