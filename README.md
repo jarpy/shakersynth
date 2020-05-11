@@ -27,7 +27,7 @@ to Team Shakersynth!
 Shakersynth is a basic, text-mode application with no GUI. Getting it running is
 a bit fiddly, sorry about that.
 
-1. Install [Python 3](https://www.python.org/downloads/windows/)
+1. Install [Python 3](https://www.python.org/downloads/windows/).
 2. Open PowerShell and run:
    ```powershell
    pip install shakersynth
