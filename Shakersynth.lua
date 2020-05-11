@@ -7,7 +7,7 @@ Place this script in your "Scripts" folder like:
 
 and add this line to "Export.lua" in the same folder:
 
-   local Shakersynthlfs=require('lfs'); dofile(Shakersynthlfs.writedir()..'Scripts/Shakersynth.lua')
+   dofile(require('lfs').writedir()..'Scripts/Shakersynth.lua')
 ]]--
 
 function LuaExportStart()
