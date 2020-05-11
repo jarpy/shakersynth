@@ -3,6 +3,7 @@
 import logging
 import platform
 import pyo
+import sys
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
 from logging import info
@@ -64,4 +65,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit(0)
