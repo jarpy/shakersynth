@@ -47,6 +47,8 @@ class RotorSynth():
             blade_count = 5
         elif(module == "uh-1h"):
             blade_count = 2
+        else:
+            raise NotImplementedError
 
         blades_per_second = revolutions_per_second * blade_count
         blade_period = 1 / blades_per_second
@@ -57,11 +59,13 @@ class RotorSynth():
         # Get louder, as well as faster with rising rotor RPM, with a
         # fractional exponential curve so you can still feel the signal at
         # lower RPMs.
-        shake_volume = (((telemetry["rotor_rpm_percent"] / 100) ** 0.6) * config.global_volume)
+        shake_volume = ((telemetry["rotor_rpm_percent"] / 100) ** 0.6)
+        shake_volume *= config.global_volume
+
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
 
         # Lower RPM means slower blades, so each "shake" should last longer.
-        shake_duration = blade_period / 5
+        shake_duration = blade_period / 7
         self.vca0.setDur(shake_duration)
         self.vca1.setDur(shake_duration)

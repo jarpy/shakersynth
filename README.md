@@ -17,10 +17,3 @@ Currently, Shakersynth provides _only_ rotor vibrations for the Mi-8 and
 UH-1H. It's best to run it alongside SimShaker Sound Module, which does a good
 job of handling a wide range of effects that don't benefit so much from the
 real-time synthesis approach.
-
-Shakersynth currently uses SimShaker's Lua export data, which is full of great
-stuff. It requires a modified copy of the Lua script from SimShaker. If you are
-interested in trying Shakersynth at this early stage, get in touch with me
-(Jarpy#3445 on Discord). I won't distribute the modified file. Soon, I'll
-develop a dedicated `export.lua` for Shakersynth, making it a stand-alone system
-ready for alpha release.

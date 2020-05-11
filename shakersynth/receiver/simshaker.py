@@ -5,7 +5,7 @@ class SimShakerReceiver():
     def __init__(self, port=29377):
         if port is not None:
             self.listener = socket.socket(type=socket.SOCK_DGRAM)
-            self.listener.bind(('localhost', port))
+            self.listener.bind(('', port))
 
     def get_telemetry(self):
         """Return the next available telemetry payload.
