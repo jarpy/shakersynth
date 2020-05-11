@@ -27,4 +27,9 @@ setuptools.setup(
         "Topic :: Multimedia :: Sound/Audio :: Sound Synthesis",
     ],
     python_requires='>=3.7',
+    install_requires=[
+        'func-timeout',
+        'pyo',
+        'pyaml',
+    ]
 )
