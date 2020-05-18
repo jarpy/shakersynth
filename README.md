@@ -45,7 +45,7 @@ a bit fiddly, sorry about that.
    dofile(require('lfs').writedir()..'Scripts/Shakersynth.lua')
    ```
 5. Back in PowerShell, run `python -m shakersynth`
-6. Shakersynth will show a (long) list of Audio devices. Identify an `OUT` for
+6. Shakersynth will show a (long) list of audio devices. Identify an `OUT` for
    your bass shaker(s) and enter the number at the prompt.
 7. Run DCS.
 
