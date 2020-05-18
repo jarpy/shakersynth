@@ -1,7 +1,14 @@
+default: test lint
+
 test:
 	pytest --cov=shakersynth --cov-report=html
+
+lint:
 	flake8 --exclude=venv .
 	mypy shakersynth
+
+test-watch:
+	pytest-watch --beforerun=clear --runner='make'
 
 clean:
 	rm -rf build dist

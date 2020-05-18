@@ -7,4 +7,4 @@ try:
 except KeyError:
     log_level_name = logging.INFO
 
-global_volume = 0.7
+global_volume = 0.95

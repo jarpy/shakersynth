@@ -24,16 +24,17 @@ def test_running_aircraft_can_be_stopped(aircraft):
 
 
 def test_aircraft_have_a_rotorsynth(aircraft):
-    assert type(aircraft.rotor_synth) is RotorSynth
+    assert any([type(synth) is RotorSynth
+                for synth in aircraft.synths])
 
 
-def test_get_rotor_rpm_is_correct_for_mi8(aircraft):
+def test_calculate_rotor_rpm_is_correct_for_mi8(aircraft):
     telemetry = {
         "module": "mi-8",
         "rotor_rpm_percent": 95.0
     }
     aircraft.update(telemetry)
-    rpm = aircraft.get_rotor_rpm()
+    rpm = aircraft._calculate_rotor_rpm()
     assert int(rpm) == 191
 
 
@@ -43,7 +44,7 @@ def test_calculate_rotor_rpm_is_correct_for_huey(aircraft):
         "rotor_rpm_percent": 90.0
     }
     aircraft.update(telemetry)
-    rpm = aircraft.get_rotor_rpm()
+    rpm = aircraft._calculate_rotor_rpm()
     assert int(rpm) == 324
 
 

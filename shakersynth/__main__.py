@@ -4,6 +4,7 @@ import logging
 import platform
 import pyo
 import sys
+from shakersynth.config import config
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
 from logging import info
@@ -30,6 +31,7 @@ def main():
 
     server.boot()
     server.start()
+    server.setAmp(config.global_volume)
 
     # Receive Telemetry from the Shakersynth DCS export script.
     receiver = ShakersynthReceiver()

@@ -1,5 +1,4 @@
 import pyo
-from shakersynth.config import config
 
 
 class RotorSynth():
@@ -55,7 +54,6 @@ class RotorSynth():
         # fractional exponential curve so you can still feel the signal at
         # lower RPMs.
         shake_volume = ((telemetry["rotor_rpm_percent"] / 100) ** 0.6)
-        shake_volume *= config.global_volume
 
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
