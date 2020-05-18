@@ -3,9 +3,7 @@ from shakersynth.config import config
 
 
 class RotorSynth():
-    def __init__(self, server: pyo.Server):
-        self.server = server
-
+    def __init__(self):
         envelope0 = pyo.CosTable([
             (0000, 0.0),
             (2000, 1.0),

@@ -1,14 +1,12 @@
-import pyo
 from shakersynth.synth.rotor import RotorSynth
 from typing import Dict  # noqa: F401
 
 
 class Aircraft():
-    def __init__(self, synth_engine: pyo.Server):
+    def __init__(self):
         self.data = {}  # type: Dict[str, float]
         self.is_running = False
-        self.synth_engine = synth_engine
-        self.rotor_synth = RotorSynth(self.synth_engine)
+        self.rotor_synth = RotorSynth()
 
     def __getitem__(self, key):
         return self.data[key]

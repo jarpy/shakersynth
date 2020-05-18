@@ -1,4 +1,3 @@
-import pyo
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.synth.rotor import RotorSynth
 from pytest import fixture
@@ -6,9 +5,7 @@ from pytest import fixture
 
 @fixture
 def aircraft():
-    synth_engine = pyo.Server(audio="offline_nb")
-    synth_engine.boot()
-    return Aircraft(synth_engine=synth_engine)
+    return Aircraft()
 
 
 def test_new_aircraft_are_not_running(aircraft):

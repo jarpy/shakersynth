@@ -36,7 +36,7 @@ def main():
 
     # All telemetry processing and sound synthesis happens in the aircraft
     # model.
-    aircraft = Aircraft(synth_engine=server)
+    aircraft = Aircraft()
 
     # On Windows, ctrl+c will not stop our process if we are blocked on
     # waiting for a for a UDP packet. However, ctrl+break will.
