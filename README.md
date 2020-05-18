@@ -49,4 +49,14 @@ a bit fiddly, sorry about that.
    your bass shaker(s) and enter the number at the prompt.
 7. Run DCS.
 
+### Upgrading to a new version
+1. Open PowerShell and run:
+   ```powershell
+   pip install --upgrade shakersynth
+   ```
+2. Save the latest version of [Shakersynth.lua][] to the folder:
+   ```
+   %UserProfile%\Saved Games\DCS\Scripts
+   ```
+
 [Shakersynth.lua]: https://raw.githubusercontent.com/jarpy/shakersynth/master/Shakersynth.lua
