@@ -29,9 +29,6 @@ class RotorSynth():
         self.osc0 = pyo.Sine(freq=35, mul=self.vca0)
         self.osc1 = pyo.Sine(freq=35, mul=self.vca1)
 
-        self.osc0.out(0)
-        self.osc1.out(1)
-
     def update(self, telemetry):
         """Update synth parameters based on telemetry."""
         rpm = telemetry["rotor_rpm"]
@@ -69,3 +66,11 @@ class RotorSynth():
         shake_duration = blade_period / 6
         self.vca0.setDur(shake_duration)
         self.vca1.setDur(shake_duration)
+
+    def start(self):
+        self.osc0.out(0)
+        self.osc1.out(1)
+
+    def stop(self):
+        self.osc0.stop()
+        self.osc1.stop()

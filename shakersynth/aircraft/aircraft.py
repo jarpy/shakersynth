@@ -6,6 +6,7 @@ from typing import Dict  # noqa: F401
 class Aircraft():
     def __init__(self, synth_engine: pyo.Server):
         self.data = {}  # type: Dict[str, float]
+        self.is_running = False
         self.synth_engine = synth_engine
         self.rotor_synth = RotorSynth(self.synth_engine)
 
@@ -29,6 +30,14 @@ class Aircraft():
             return rpm_percent * 3.6
         else:
             return 0.00000001
+
+    def start(self):
+        self.rotor_synth.start()
+        self.is_running = True
+
+    def stop(self):
+        self.rotor_synth.stop()
+        self.is_running = False
 
 # 1. http://koavia.com/eng/product/helicopter/hvostovye_valy.shtml#2
 # 2. https://www.pprune.org/rotorheads/221789-mil-8-mtv-mtv-1-info.html

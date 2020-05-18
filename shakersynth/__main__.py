@@ -34,6 +34,10 @@ def main():
     # Receive Telemetry from the Shakersynth DCS export script.
     receiver = ShakersynthReceiver()
 
+    # All telemetry processing and sound synthesis happens in the aircraft
+    # model.
+    aircraft = Aircraft(synth_engine=server)
+
     # On Windows, ctrl+c will not stop our process if we are blocked on
     # waiting for a for a UDP packet. However, ctrl+break will.
     if platform.system() == "Windows":
@@ -42,26 +46,24 @@ def main():
         print("*" * 80)
 
     # A little state machine to keep track of our aircraft and telemetry.
-    aircraft = None
     while True:
         telemetry = receiver.get_telemetry()
 
-        if telemetry and aircraft is None:
+        if telemetry and not aircraft.is_running:
             # Then we have just started a mission.
             info("Starting new aircraft: %s" % telemetry["module"])
-            aircraft = Aircraft(synth_engine=server)
             aircraft.update(telemetry)
+            aircraft.start()
 
-        elif telemetry and aircraft:
+        elif telemetry and aircraft.is_running:
             # Then things are ticking along nicely.
             aircraft.update(telemetry)
 
-        elif aircraft and not telemetry:
+        elif aircraft.is_running and not telemetry:
             # Then we got an empty telemetry object while running an aircraft.
             # This signifies that we left the mission or lost contact with DCS.
             info("Shutting down aircraft: %s" % aircraft["module"])
-            del(aircraft)
-            aircraft = None
+            aircraft.stop()
 
 
 if __name__ == "__main__":
