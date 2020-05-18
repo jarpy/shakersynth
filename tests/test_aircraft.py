@@ -28,26 +28,6 @@ def test_aircraft_have_a_rotorsynth(aircraft):
                 for synth in aircraft.synths])
 
 
-def test_calculate_rotor_rpm_is_correct_for_mi8(aircraft):
-    telemetry = {
-        "module": "mi-8",
-        "rotor_rpm_percent": 95.0
-    }
-    aircraft.update(telemetry)
-    rpm = aircraft._calculate_rotor_rpm()
-    assert int(rpm) == 191
-
-
-def test_calculate_rotor_rpm_is_correct_for_huey(aircraft):
-    telemetry = {
-        "module": "uh-1h",
-        "rotor_rpm_percent": 90.0
-    }
-    aircraft.update(telemetry)
-    rpm = aircraft._calculate_rotor_rpm()
-    assert int(rpm) == 324
-
-
 def test_aircraft_data_key_lookup(aircraft):
     aircraft.data = {"food": "jp4"}
     assert aircraft["food"] == "jp4"

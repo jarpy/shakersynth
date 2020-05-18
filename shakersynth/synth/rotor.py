@@ -28,7 +28,8 @@ class RotorSynth():
 
     def update(self, telemetry):
         """Update synth parameters based on telemetry."""
-        rpm = telemetry["rotor_rpm"]
+        rpm = self._calculate_rotor_rpm(telemetry)
+
         if rpm == 0:
             rpm = 0.00000001
 
@@ -70,3 +71,20 @@ class RotorSynth():
     def stop(self):
         self.osc0.stop()
         self.osc1.stop()
+
+    def _calculate_rotor_rpm(self, telemetry):
+        module = telemetry["module"]
+        rpm_percent = telemetry["rotor_rpm_percent"]
+
+        if(module == "mi-8"):
+            # 95 gauge RPM == 192 real rotor RPM. [1, 2]
+            return rpm_percent * 2.02105
+        elif(module == "uh-1h"):
+            # 90 gauge RPM == 324 real rotor RPM. [3]
+            return rpm_percent * 3.6
+        else:
+            return 0.00000001
+
+# 1. http://koavia.com/eng/product/helicopter/hvostovye_valy.shtml#2
+# 2. https://www.pprune.org/rotorheads/221789-mil-8-mtv-mtv-1-info.html
+# 3. https://apps.dtic.mil/dtic/tr/fulltext/u2/901787.pdf
