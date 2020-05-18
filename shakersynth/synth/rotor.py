@@ -31,7 +31,7 @@ class RotorSynth():
         self.osc0 = pyo.Sine(freq=35, mul=self.vca0)
         self.osc1 = pyo.Sine(freq=35, mul=self.vca1)
 
-    def update(self, telemetry):
+    def update(self, telemetry: dict):
         """Update synth parameters based on telemetry."""
         rpm = self._calculate_rotor_rpm(telemetry)
 
@@ -77,7 +77,7 @@ class RotorSynth():
         self.osc0.stop()
         self.osc1.stop()
 
-    def _calculate_rotor_rpm(self, telemetry):
+    def _calculate_rotor_rpm(self, telemetry: dict):
         module = telemetry["module"]
         rpm_percent = telemetry["rotor_rpm_percent"]
 

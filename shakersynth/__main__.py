@@ -51,18 +51,19 @@ def main():
     # A little state machine to keep track of our aircraft and telemetry.
     while True:
         telemetry = receiver.get_telemetry()
+        running = aircraft.is_running
 
-        if telemetry and not aircraft.is_running:
+        if telemetry and not running:
             # Then we have just started a mission.
             log.info("Starting new aircraft: %s" % telemetry["module"])
             aircraft.update(telemetry)
             aircraft.start()
 
-        elif telemetry and aircraft.is_running:
+        elif telemetry and running:
             # Then things are ticking along nicely.
             aircraft.update(telemetry)
 
-        elif aircraft.is_running and not telemetry:
+        elif running and not telemetry:
             # Then we got an empty telemetry object while running an aircraft.
             # This signifies that we left the mission or lost contact with DCS.
             log.info("Shutting down aircraft.")
