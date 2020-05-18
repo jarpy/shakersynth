@@ -2,10 +2,10 @@ import logging
 import socket
 import yaml
 from func_timeout import func_set_timeout, FunctionTimedOut  # type: ignore
-from logging import debug
 from shakersynth.config import config
 
-logging.basicConfig(level=config.log_level)
+log = logging.getLogger(__name__)
+log.setLevel(config.log_level)
 
 
 class ShakersynthReceiver():
@@ -13,23 +13,29 @@ class ShakersynthReceiver():
 
     def __init__(self, bind_addr="", port=17707):
         """Create a telemetry receiver listening on a UDP socket."""
+        self.packet_count = 0
         if port is not None:
             self.listener = socket.socket(type=socket.SOCK_DGRAM)
             self.listener.bind((bind_addr, port))
 
     @func_set_timeout(1)
     def recieve_udp(self):
+        """Recieve a UDP packet.
+
+        Raises FunctionTimedOut if one is not received within 1 second.
+        """
         return self.listener.recv(1500)
 
     def get_telemetry(self):
         """Return the next available telemetry payload.
 
-        Blocks until one is available.
+        Returns an empty dictionary if nothing is received within 1 second.
         """
         try:
             payload = self.recieve_udp()
+            self.packet_count += 1
         except FunctionTimedOut:
-            debug('No telemetry...')
+            log.debug('No telemetry...')
             return {}
 
         # YAML may seem like a strange wire format, but it's very fast and
@@ -51,5 +57,6 @@ class ShakersynthReceiver():
 
         telemetry["module"] = module
 
-        debug(telemetry)
+        if self.packet_count % 60 == 0:
+            log.debug("Telemetry sample: %s" % telemetry)
         return telemetry

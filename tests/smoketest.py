@@ -11,7 +11,7 @@ def transmit(telemetry: dict):
     sock.sendto(payload.encode(), ("127.0.0.1", 17707))
 
 
-print("Starting glorious Mi-8, commander!")
+print("Starting glorious Mi-8, Commander!")
 rotor_rpm_percent = 0.01
 for n in range(0, 2000):
     transmit({

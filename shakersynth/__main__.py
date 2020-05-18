@@ -7,9 +7,10 @@ import sys
 from shakersynth.config import config
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
-from logging import info
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig()
+log = logging.getLogger("main")
+log.setLevel(config.log_level)
 
 
 def main():
@@ -53,7 +54,7 @@ def main():
 
         if telemetry and not aircraft.is_running:
             # Then we have just started a mission.
-            info("Starting new aircraft: %s" % telemetry["module"])
+            log.info("Starting new aircraft: %s" % telemetry["module"])
             aircraft.update(telemetry)
             aircraft.start()
 
@@ -64,7 +65,7 @@ def main():
         elif aircraft.is_running and not telemetry:
             # Then we got an empty telemetry object while running an aircraft.
             # This signifies that we left the mission or lost contact with DCS.
-            info("Shutting down aircraft: %s" % aircraft["module"])
+            log.info("Shutting down aircraft.")
             aircraft.stop()
 
 

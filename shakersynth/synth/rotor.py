@@ -1,4 +1,9 @@
+import logging
 import pyo
+from shakersynth.config import config
+
+log = logging.getLogger(__name__)
+log.setLevel(config.log_level)
 
 
 class RotorSynth():
