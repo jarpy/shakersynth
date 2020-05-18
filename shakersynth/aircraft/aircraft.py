@@ -4,17 +4,12 @@ from typing import Dict  # noqa: F401
 
 class Aircraft():
     def __init__(self):
-        self.data = {}  # type: Dict[str, float]
-        self.is_running = False
         self.synths = [RotorSynth()]
-
-    def __getitem__(self, key):
-        return self.data[key]
+        self.is_running = False
 
     def update(self, telemetry: dict):
-        self.data = telemetry
         for synth in self.synths:
-            synth.update(self.data)
+            synth.update(telemetry)
 
     def start(self):
         for synth in self.synths:

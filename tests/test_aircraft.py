@@ -26,8 +26,3 @@ def test_running_aircraft_can_be_stopped(aircraft):
 def test_aircraft_have_a_rotorsynth(aircraft):
     assert any([type(synth) is RotorSynth
                 for synth in aircraft.synths])
-
-
-def test_aircraft_data_key_lookup(aircraft):
-    aircraft.data = {"food": "jp4"}
-    assert aircraft["food"] == "jp4"
