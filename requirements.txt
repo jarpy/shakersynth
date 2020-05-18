@@ -1,6 +1,8 @@
+coverage
 flake8
 func-timeout
 mypy
 pyo
 pytest
+pytest-cov
 pyyaml

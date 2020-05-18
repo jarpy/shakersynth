@@ -1,6 +1,6 @@
 test:
-	pytest
-	flake8 shakersynth shakersynth.py
+	pytest --cov=shakersynth --cov-report=html
+	flake8 --exclude=venv .
 	mypy shakersynth
 
 clean:
