@@ -28,7 +28,7 @@ def main():
         print("  %s: %s" % (friendly, properties["name"]))
         friendly_to_internal[friendly] = internal
 
-    print("Enter device ID to use: ")
+    print("Enter device ID to use: ", end="")
     chosen_device = int(input())
     server.setOutputDevice(friendly_to_internal[chosen_device])
 
