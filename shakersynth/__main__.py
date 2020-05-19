@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import logging
-import platform
 import pyo
 import sys
 from shakersynth.config import config
@@ -43,12 +42,11 @@ def main():
     # model.
     aircraft = Aircraft()
 
-    # On Windows, ctrl+c will not stop our process if we are blocked on
-    # waiting for a for a UDP packet. However, ctrl+break will.
-    if platform.system() == "Windows":
-        print("*" * 80)
-        print("Press ctrl+break to exit Shakersynth.")
-        print("*" * 80)
+    print("*" * 80)
+    print("ShakerSynth now running.")
+    print("Press ctrl+c to exit.")
+    print("*" * 80)
+    log.info("Waiting for initial telemetry.")
 
     # A little state machine to keep track of our aircraft and telemetry.
     while True:
