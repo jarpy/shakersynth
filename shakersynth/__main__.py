@@ -18,17 +18,19 @@ def main():
     server = pyo.Server(nchnls=2, duplex=0, buffersize=2048)
     server.setVerbosity(1)
 
-    if platform.system() == "Windows":
-        # Running for real with DCS, so ask which sound device has the bass
-        # shakers attached.
-        print(pyo.pa_list_devices())
-        print("Enter device ID: ")
-        device_id = int(input())
-        server.setOutputDevice(device_id)
-    else:
-        # Developing on Linux, just send to the default device so we can listen
-        # on headphones.
-        server.setOutputDevice(pyo.pa_get_default_output())
+    # Map audio outputs from internal numbers (which can be sparse and large)
+    # a nice linear series for the user.
+    print("-" * 80)
+    print("Found these audio outputs:")
+    output_devices = pyo.pa_get_devices_infos()[1]
+    friendly_to_internal = {}
+    for friendly, (internal, properties) in enumerate(output_devices.items()):
+        print("  %s: %s" % (friendly, properties["name"]))
+        friendly_to_internal[friendly] = internal
+
+    print("Enter device ID to use: ")
+    chosen_device = int(input())
+    server.setOutputDevice(friendly_to_internal[chosen_device])
 
     server.boot()
     server.start()
