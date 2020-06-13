@@ -24,6 +24,7 @@ class RotorSynth():
             (8191, 0.0),
         ])
 
+        self.is_running = False
         self.lfo = pyo.Metro(time=.25, poly=1).play()
 
         self.vca0 = pyo.TrigEnv(self.lfo, table=envelope0, dur=0.05, mul=0.0)
@@ -69,24 +70,37 @@ class RotorSynth():
         self.vca0.setDur(shake_duration)
         self.vca1.setDur(shake_duration)
 
+        # Shutdown the synth when RPM is very low, to avoid glitches.
+        if rpm < 1 and self.is_running:
+            self.stop()
+        else:
+            self.start()
+
     def start(self):
+        if self.is_running:
+            return
         self.osc0.out(0)
         self.osc1.out(1)
+        self.is_running = True
 
     def stop(self):
+        if not self.is_running:
+            return
         self.osc0.stop()
         self.osc1.stop()
+        self.is_running = False
 
-    def _calculate_rotor_rpm(self, telemetry: dict):
+    def _calculate_rotor_rpm(self, telemetry: dict) -> float:
+        """Given a telemetry payload, return the true RPM of the rotor."""
         module = telemetry["module"]
         rpm_percent = telemetry["rotor_rpm_percent"]
 
         if(module == "mi-8"):
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
-            return rpm_percent * (192 / 95)
+            return float(rpm_percent * (192 / 95))
         elif(module == "uh-1h"):
             # 90 gauge RPM == 324 real rotor RPM. [3]
-            return rpm_percent * (324 / 90)
+            return float(rpm_percent * (324 / 90))
         else:
             return 0.00000001
 

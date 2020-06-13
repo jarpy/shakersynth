@@ -18,14 +18,15 @@ def main():
     server.setVerbosity(1)
 
     # Map audio outputs from internal numbers (which can be sparse and large)
-    # a nice linear series for the user.
-    print("-" * 80)
-    print("Found these audio outputs:")
+    # to a friendly, 1-indexed, monotonic series for the user.
     output_devices = pyo.pa_get_devices_infos()[1]
     friendly_to_internal = {}
+    print("-" * 80)
+    print("Found these audio outputs:")
     for friendly, (internal, properties) in enumerate(output_devices.items()):
-        print("  %s: %s" % (friendly, properties["name"]))
+        friendly += 1
         friendly_to_internal[friendly] = internal
+        print("  %s: %s" % (friendly, properties["name"]))
 
     print("Enter device ID to use: ", end="")
     chosen_device = int(input())
