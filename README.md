@@ -10,6 +10,12 @@ A nice example is helicopter rotor vibrations. Unlike with pre-recorded samples,
 Shakersynth continuously adjusts multiple properties of the vibration to match
 the rotor in the simulator, so you can feel each blade as it passes overhead.
 
+### Demo
+Play this video through your bass shakers to (literally) get a feel for what
+Shakersynth can do.
+
+  - [Shakersynth UH-1H Demo Video](https://youtu.be/CfWt1DQw7VE)
+
 ### Development Status
 
 Currently, Shakersynth provides _only_ rotor vibrations for the Mi-8 and
