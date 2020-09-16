@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/jarpy/shakersynth",
     packages=setuptools.find_packages(),
     classifiers=[
-        "Development Status :: 2 - Pre-Alpha",
+        "Development Status :: 3 - Alpha",
         "Environment :: Console",
         "Intended Audience :: End Users/Desktop",
         "License :: OSI Approved :: MIT License",

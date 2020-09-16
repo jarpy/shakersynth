@@ -10,7 +10,7 @@ A nice example is helicopter rotor vibrations. Unlike with pre-recorded samples,
 Shakersynth continuously adjusts multiple properties of the vibration to match
 the rotor in the simulator, so you can feel each blade as it passes overhead.
 
-### Development Status: Pre-alpha
+### Development Status
 
 Currently, Shakersynth provides _only_ rotor vibrations for the Mi-8 and
 UH-1H. It's best to run it alongside SimShaker Sound Module, which does a good
