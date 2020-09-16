@@ -27,7 +27,8 @@ to Team Shakersynth!
 Shakersynth is a basic, text-mode application with no GUI. Getting it running is
 a bit fiddly, sorry about that.
 
-1. Install [Python 3](https://www.python.org/downloads/windows/).
+1. Install [Python 3](https://www.python.org/downloads/windows/).<br>
+   :point_right: Be sure to select options to add Python to the `PATH` environment variable.
 2. Open PowerShell and run:
    ```powershell
    pip install shakersynth
@@ -44,8 +45,11 @@ a bit fiddly, sorry about that.
    ```lua
    dofile(require('lfs').writedir()..'Scripts/Shakersynth.lua')
    ```
-5. Back in PowerShell, run `python -m shakersynth`
-6. Shakersynth will show a list of audio outputs. Identify the number that
+5. Back in PowerShell, run:
+   ```
+   shakersynth
+   ```
+6. Shakersynth will show a list of audio outputs. Find the number that
    corresponds to your bass shaker interface and enter that number at the
    prompt.
 7. Run DCS.
