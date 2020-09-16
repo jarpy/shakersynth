@@ -14,19 +14,22 @@ log.setLevel(config.log_level)
 
 def main():
     # Audio synthesis setup.
-    server = pyo.Server(nchnls=2, duplex=0, buffersize=2048)
+    server = pyo.Server(nchnls=2, duplex=0, buffersize=2048, sr=48000)
     server.setVerbosity(1)
 
     # Map audio outputs from internal numbers (which can be sparse and large)
     # to a friendly, 1-indexed, monotonic series for the user.
     output_devices = pyo.pa_get_devices_infos()[1]
     friendly_to_internal = {}
+
     print("-" * 80)
     print("Found these audio outputs:")
-    for friendly, (internal, properties) in enumerate(output_devices.items()):
-        friendly += 1
-        friendly_to_internal[friendly] = internal
-        print("  %s: %s" % (friendly, properties["name"]))
+    for friendly_index, (internal_index, properties) in enumerate(output_devices.items()):
+        # Only list devices that are available using the default audio API.
+        if properties["host api index"] == pyo.pa_get_default_host_api():
+            friendly_index += 1
+            friendly_to_internal[friendly_index] = internal_index
+            print(f"{friendly_index}: {properties['name']}")
 
     print("Enter device ID to use: ", end="")
     chosen_device = int(input())
