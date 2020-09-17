@@ -24,7 +24,8 @@ def main():
 
     print("-" * 80)
     print("Found these audio outputs:")
-    for friendly_index, (internal_index, properties) in enumerate(output_devices.items()):
+    device_details = enumerate(output_devices.items())
+    for friendly_index, (internal_index, properties) in device_details:
         # Only list devices that are available using the default audio API.
         if properties["host api index"] == pyo.pa_get_default_host_api():
             friendly_index += 1

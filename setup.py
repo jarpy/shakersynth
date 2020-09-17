@@ -1,4 +1,4 @@
-import setuptools # type: ignore
+import setuptools  # type: ignore
 
 with open("README.md", "r") as readme:
     long_description = readme.read()
