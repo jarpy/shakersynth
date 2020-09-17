@@ -14,7 +14,7 @@ def test_calculate_rotor_rpm_is_correct_for_mi8(rotor):
         "rotor_rpm_percent": 95.0
     }
     rpm = rotor._calculate_rotor_rpm(telemetry)
-    assert isclose(rpm, 192)
+    assert isclose(rpm, 200)
 
 
 def test_calculate_rotor_rpm_is_correct_for_huey(rotor):

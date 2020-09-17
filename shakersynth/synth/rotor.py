@@ -63,8 +63,9 @@ class RotorSynth():
         # fractional exponential curve so you can still feel the signal at
         # lower RPMs.
         shake_volume = max(
-          ((telemetry["rotor_rpm_percent"] / 100) ** 0.6) - 0.05,
-            0)
+            ((telemetry["rotor_rpm_percent"] / 100) ** 0.6) - 0.05,
+            0
+        )
 
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
@@ -95,6 +96,7 @@ class RotorSynth():
 
         if(module == "mi-8"):
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
+            # But 200 gives better results in the sim.
             return float(rpm_percent * (200 / 95))
         elif(module == "uh-1h"):
             # 90 gauge RPM == 324 real rotor RPM. [3]
