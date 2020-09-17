@@ -62,7 +62,7 @@ class RotorSynth():
         # Get louder, as well as faster with rising rotor RPM, with a
         # fractional exponential curve so you can still feel the signal at
         # lower RPMs.
-        shake_volume = ((telemetry["rotor_rpm_percent"] / 100) ** 0.6)
+        shake_volume = max(
 
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
