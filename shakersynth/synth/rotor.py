@@ -99,7 +99,7 @@ class RotorSynth():
 
         if(module == "mi-8"):
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
-            return float(rpm_percent * (192 / 95))
+            return float(rpm_percent * (200 / 95))
         elif(module == "uh-1h"):
             # 90 gauge RPM == 324 real rotor RPM. [3]
             return float(rpm_percent * (324 / 90))

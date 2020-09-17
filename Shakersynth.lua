@@ -43,7 +43,7 @@ function LuaExportAfterNextFrame()
    local payload = string.format(
       "---\n" ..
          "module: %s\n" ..
-         "rotor_rpm_percent: %.4f\n",
+         "rotor_rpm_percent: %.16f\n",
       module,
       rotor_rpm_percent
    )
