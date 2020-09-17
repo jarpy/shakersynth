@@ -63,6 +63,8 @@ class RotorSynth():
         # fractional exponential curve so you can still feel the signal at
         # lower RPMs.
         shake_volume = max(
+          ((telemetry["rotor_rpm_percent"] / 100) ** 0.6) - 0.05,
+            0)
 
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
@@ -71,12 +73,6 @@ class RotorSynth():
         shake_duration = blade_period / 6
         self.vca0.setDur(shake_duration)
         self.vca1.setDur(shake_duration)
-
-        # Shutdown the synth when RPM is very low, to avoid glitches.
-        if rpm < 1 and self.is_running:
-            self.stop()
-        else:
-            self.start()
 
     def start(self):
         if self.is_running:
