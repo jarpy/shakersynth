@@ -12,10 +12,11 @@ to match the rotor in the simulator, so you can feel each blade as it passes
 overhead.
 
 ### Demo
-Play this video through your bass shakers to (literally) get a feel for what
+Play these videos through your bass shakers to (literally) get a feel for what
 Shakersynth can do.
 
-  - [Shakersynth UH-1H Demo Video](https://youtu.be/CfWt1DQw7VE)
+  - [UH-1H Demo Video](https://youtu.be/CfWt1DQw7VE)
+  - [Mi-8 Demo Video](https://youtu.be/9qU_9t4jrcw)
 
 ### Development Status
 
