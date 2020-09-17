@@ -31,6 +31,8 @@ class RotorSynth():
         self.vca1 = pyo.TrigEnv(self.lfo, table=envelope1, dur=0.05, mul=0.0)
         self.osc0 = pyo.Sine(freq=35, mul=self.vca0)
         self.osc1 = pyo.Sine(freq=35, mul=self.vca1)
+        self.filter0 = pyo.Biquad(self.osc0, freq=160.0)
+        self.filter1 = pyo.Biquad(self.osc1, freq=160.0)
 
     def update(self, telemetry: dict):
         """Update synth parameters based on telemetry."""
@@ -79,15 +81,15 @@ class RotorSynth():
     def start(self):
         if self.is_running:
             return
-        self.osc0.out(0)
-        self.osc1.out(1)
+        self.filter0.out(0)
+        self.filter1.out(1)
         self.is_running = True
 
     def stop(self):
         if not self.is_running:
             return
-        self.osc0.stop()
-        self.osc1.stop()
+        self.filter0.stop()
+        self.filter1.stop()
         self.is_running = False
 
     def _calculate_rotor_rpm(self, telemetry: dict) -> float:
