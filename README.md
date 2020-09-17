@@ -72,5 +72,5 @@ is a little bit fiddly. Sorry about that.
    ```
 
 [pyo]: https://pypi.org/project/pyo/
-[Python3]: https://www.python.org/downloads/windows/
+[Python 3]: https://www.python.org/downloads/windows/
 [Shakersynth.lua]: https://raw.githubusercontent.com/jarpy/shakersynth/main/Shakersynth.lua
