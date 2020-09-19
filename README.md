@@ -5,10 +5,9 @@ bass shakers) from DCS World. It uses parametric real-time audio synthesis,
 provided by [pyo], enabling it to create sounds that are dynamically derived
 from DCS telemetry data.
 
-The canonical use-case is helicopter rotor vibrations. Unlike with pre-recorded
-samples, Shakersynth continuously adjusts multiple properties of the vibration
-to match the rotor in the simulator, so you can feel each blade as it passes
-overhead.
+The canonical use-case is helicopter rotor vibrations. Shakersynth continuously
+adjusts multiple properties of the vibration to match the rotor in the simulator,
+so you can feel each blade as it passes overhead.
 
 ### Demo
 Play these videos through your bass shakers to (literally) get a feel for what
