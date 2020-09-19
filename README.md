@@ -1,8 +1,7 @@
 ## Shakersynth
 
 Shakersynth is an alternative approach to driving tactile transducers (aka.
-bass shakers) from DCS World. Existing solutions use pre-recorded sound samples
-as their audio source. Shakersynth uses parametric real-time audio synthesis,
+bass shakers) from DCS World. It uses parametric real-time audio synthesis,
 provided by [pyo], enabling it to create sounds that are dynamically derived
 from DCS telemetry data.
 
