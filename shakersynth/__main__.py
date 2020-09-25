@@ -14,7 +14,7 @@ log.setLevel(config.log_level)
 
 def main():
     # Audio synthesis setup.
-    server = pyo.Server(nchnls=2, duplex=0, buffersize=2048, sr=48000)
+    server = pyo.Server(nchnls=2, duplex=0, buffersize=512, winhost="wasapi", sr=44100)
     server.setVerbosity(1)
 
     # Map audio outputs from internal numbers (which can be sparse and large)
