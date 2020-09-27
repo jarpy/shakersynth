@@ -16,7 +16,7 @@ log_level = getattr(
 
 default_yaml = dedent(
     """
-    # Select and config the audio API.
+    # Select and configure the audio API.
     # Options on Windows are "mme", "directsound", "asio", "wasapi", "wdm-ks".
     #
     # See also: http://ajaxsoundstudio.com/pyodoc/winaudioinspect.html
