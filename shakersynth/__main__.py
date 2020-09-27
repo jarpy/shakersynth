@@ -13,8 +13,17 @@ log.setLevel(config.log_level)
 
 
 def main():
+    print("\n" + "-" * 35 + "Shakersynth" + "-" * 35)
     # Audio synthesis setup.
-    server = pyo.Server(nchnls=2, duplex=0, buffersize=1024, winhost="wasapi", sr=44100)
+    api = config.audio_api
+    print(f"Using audio API: {api}")
+    server = pyo.Server(
+        nchnls=2,
+        duplex=0,
+        buffersize=config.buffer_size,
+        winhost=api,
+        sr=config.sample_rate
+    )
     server.setVerbosity(1)
 
     # Map audio outputs from internal numbers (which can be sparse and large)
@@ -22,7 +31,6 @@ def main():
     output_devices = pyo.pa_get_devices_infos()[1]
     friendly_to_internal = {}
 
-    print("-" * 80)
     print("Found these audio outputs:")
     device_details = enumerate(output_devices.items())
     for friendly_index, (internal_index, properties) in device_details:
@@ -30,7 +38,7 @@ def main():
         if properties["host api index"] == pyo.pa_get_default_host_api():
             friendly_index += 1
             friendly_to_internal[friendly_index] = internal_index
-            print(f"{friendly_index}: {properties['name']}")
+            print(f"  {friendly_index}: {properties['name']}")
 
     print("Enter device ID to use: ", end="")
     chosen_device = int(input())

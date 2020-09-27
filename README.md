@@ -59,6 +59,20 @@ is a little bit fiddly. Sorry about that.
    prompt.
 7. Run DCS.
 
+### Configuration
+When first run, Shakersynth creates a default configuration file at:
+```
+%LOCALAPPDATA%\Shakersynth\shakersynth.yml
+```
+
+On my system, that becomes:
+```
+C:\Users\jarpy\AppData\Local\Shakersynth\shakersynth.yml
+```
+
+Edit this file to set some important options, like which audio API to use
+(`mme`, `directsound`, etc.), and to set the sample rate and output volume.
+
 ### Upgrading to a new version
 1. Open PowerShell and run:
    ```powershell
@@ -68,6 +82,8 @@ is a little bit fiddly. Sorry about that.
    ```
    %UserProfile%\Saved Games\DCS\Scripts
    ```
+   :point_up: This step is only needed after a major version change, like
+   `0.6.0` -> `1.0.0`.
 
 [pyo]: https://pypi.org/project/pyo/
 [Python 3]: https://www.python.org/downloads/windows/
