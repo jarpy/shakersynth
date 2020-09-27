@@ -33,19 +33,24 @@ function LuaExportAfterNextFrame()
    local rotor_rpm_percent = 0
    if module == "Mi-8MT" then
       rotor_rpm_percent = main_panel:get_argument_value(42) * 100
+      rotor_pitch       = main_panel:get_argument_value(36)
    elseif module == "UH-1H" then
       rotor_rpm_percent = main_panel:get_argument_value(123) * 100
+      rotor_pitch       = 1 -- Not available in Huey.
    else
       -- Unsupported helicopter or not a helicopter.
       rotor_rpm_percent = 0
+      rotor_pitch       = 0
    end
 
    local payload = string.format(
       "---\n" ..
-         "module: %s\n" ..
-         "rotor_rpm_percent: %.16f\n",
+      "module: %s\n" ..
+      "rotor_rpm_percent: %.16f\n" ..
+      "rotor_pitch: %.16f\n",
       module,
-      rotor_rpm_percent
+      rotor_rpm_percent,
+      rotor_pitch
    )
 
    socket.try(shksynsocket:send(payload))

@@ -67,6 +67,12 @@ class RotorSynth():
             0
         )
 
+        # Get louder as the pilot pulls pitch, too.
+        # Note that this telemetry is not available on the UH-1H.
+        pitch_multiplier = 0.5 + min(telemetry["rotor_pitch"], 0.5)
+        # shake_volume = shake_volume * pitch_multiplier
+        # print(f'{pitch_multiplier} {shake_volume}')
+
         self.vca0.setMul(shake_volume)
         self.vca1.setMul(shake_volume)
 
