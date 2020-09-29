@@ -9,7 +9,7 @@ log.setLevel(config.log_level)
 
 
 class ShakersynthReceiver():
-    """Recieve YAML encoded telemetry from Shakersynth's DCS export script."""
+    """Receive YAML encoded telemetry from Shakersynth's DCS export script."""
 
     def __init__(self, bind_addr="", port=17707):
         """Create a telemetry receiver listening on a UDP socket."""
@@ -19,8 +19,8 @@ class ShakersynthReceiver():
             self.listener.bind((bind_addr, port))
 
     @func_set_timeout(1)
-    def recieve_udp(self):
-        """Recieve a UDP packet.
+    def receive_udp(self):
+        """Receive a UDP packet.
 
         Raises FunctionTimedOut if one is not received within 1 second.
         """
@@ -32,7 +32,7 @@ class ShakersynthReceiver():
         Returns an empty dictionary if nothing is received within 1 second.
         """
         try:
-            payload = self.recieve_udp()
+            payload = self.receive_udp()
             self.packet_count += 1
         except FunctionTimedOut:
             log.debug('No telemetry...')
@@ -48,8 +48,8 @@ class ShakersynthReceiver():
         try:
             module = telemetry["module"].lower()
         except KeyError:
-            # No module is active. Return an empty telemetry object signifing
-            # that we not currently in an aircraft.
+            # No module is active. Return an empty telemetry object signifying
+            # that we are not currently in an aircraft.
             return {}
 
         if module == "mi-8mt":  # Nobody says "Mi-8MT".
