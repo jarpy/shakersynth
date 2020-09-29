@@ -31,6 +31,7 @@ setuptools.setup(
         'func-timeout',
         'pyo',
         'pyaml',
+        'wxPython',
     ],
     scripts=['bin/shakersynth.bat'],
 )
