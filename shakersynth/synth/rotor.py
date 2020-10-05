@@ -29,8 +29,8 @@ class RotorSynth():
 
         self.vca0 = pyo.TrigEnv(self.lfo, table=envelope0, dur=0.05, mul=0.0)
         self.vca1 = pyo.TrigEnv(self.lfo, table=envelope1, dur=0.05, mul=0.0)
-        self.osc0 = pyo.Sine(freq=35, mul=self.vca0)
-        self.osc1 = pyo.Sine(freq=35, mul=self.vca1)
+        self.osc0 = pyo.Sine(freq=config.rotor_hz, mul=self.vca0)
+        self.osc1 = pyo.Sine(freq=config.rotor_hz, mul=self.vca1)
         self.filter0 = pyo.Biquad(self.osc0, freq=160.0)
         self.filter1 = pyo.Biquad(self.osc1, freq=160.0)
 

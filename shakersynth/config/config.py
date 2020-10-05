@@ -28,11 +28,17 @@ default_yaml = dedent(
     # used!
     audio_api: wasapi
 
+    # Be sure to use the sample rate that your sound card expects.
     sample_rate: 44100
+
+    # If you get audio glitches, try increasing the buffer.
     buffer_size: 2048
 
     # Set the overall volume between 0 and 1.0.
-    global_volume: 0.90
+    global_volume: 0.9
+
+    # Set the frequency of the sound used for the rotor.
+    rotor_hz: 35.0
     """
     ).strip()
 
