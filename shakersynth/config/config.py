@@ -6,17 +6,16 @@ import yaml
 
 from textwrap import dedent
 
+audio_api: str = "wasapi"
+sample_rate: int = 44100
+buffer_size: int = 1024
+global_volume: float = 0.90
+rotor_hz: float = 35.0
+
 log_level = getattr(
     logging,
     os.getenv('SHAKERSYNTH_LOG_LEVEL', 'info').upper()
 )
-
-defaults = {
-    "audio_api": "wasapi",
-    "sample_rate": 44100,
-    "buffer_size": 1024,
-    "global_volume": 0.90,
-}
 
 default_yaml = dedent(
     """
@@ -65,15 +64,12 @@ def create_default_config_file():
 
 def load_yaml(config_yaml: str) -> None:
     config_from_file = yaml.safe_load(config_yaml)
+    this_module = sys.modules[__name__]
 
-    merged_config = defaults.copy()
-    merged_config.update(config_from_file)
-
-    # Map all options in the config to attributes of this module.
-    # FIXME: This is too clever and breaks static analysis tools like mypy.
-    config_module = sys.modules[__name__]
-    for key, value in merged_config.items():
-        setattr(config_module, key, merged_config[key])
+    for key, value in config_from_file.items():
+        if key in ["global_volume", "rotor_hz"]:
+            value = float(value)
+        setattr(this_module, key, value)
 
 
 create_default_config_file()
