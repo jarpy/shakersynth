@@ -24,6 +24,11 @@ def test_defaults():
 
 
 def test_default_yaml_matches_real_defaults():
+    config.audio_api = None
+    config.sample_rate = None
+    config.buffer_size = None
+    config.global_volume = None
+    config.rotor_hz = None
     config.load_yaml(config.default_yaml)
     assert_defaults()
 
