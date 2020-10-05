@@ -70,8 +70,19 @@ On my system, that becomes:
 C:\Users\jarpy\AppData\Local\Shakersynth\shakersynth.yml
 ```
 
-Edit this file to set some important options, like which audio API to use
-(`mme`, `directsound`, etc.), and to set the sample rate and output volume.
+Edit this file to set some important options like the sample rate, output volume
+and frequency of the sound sent to the bass shakers.
+
+If you delete the file, it will be recreated with the current defaults.
+
+#### Configuration Options
+| Option          | Default  | Description                         |
+| --------------- | -------- | ----------------------------------- |
+| `audio_api`     | `wasapi` | Not currently working!              |
+| `sample_rate`   | `44100`  | Sample rate of the sound card.      |
+| `buffer_size`   | `1024`   | Audio buffer size in samples.       |
+| `global_volume` | `0.90`   | Output volume from `0.0` to `1.0`.  |
+| `rotor_hz`      | `35.0`   | This frequency of the rotor effect. |
 
 ### Upgrading to a new version
 1. Open PowerShell and run:
