@@ -8,7 +8,7 @@ from textwrap import dedent
 
 audio_api: str = "wasapi"
 sample_rate: int = 44100
-buffer_size: int = 1024
+buffer_size: int = 2048
 global_volume: float = 0.90
 rotor_hz: float = 35.0
 
@@ -29,7 +29,7 @@ default_yaml = dedent(
     audio_api: wasapi
 
     sample_rate: 44100
-    buffer_size: 1024
+    buffer_size: 2048
 
     # Set the overall volume between 0 and 1.0.
     global_volume: 0.90

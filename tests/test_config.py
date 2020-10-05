@@ -10,7 +10,7 @@ def assert_defaults():
     assert config.sample_rate == 44100
 
     assert type(config.buffer_size) is int
-    assert config.buffer_size == 1024
+    assert config.buffer_size == 2048
 
     assert type(config.global_volume) is float
     assert config.global_volume == 0.90
