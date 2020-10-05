@@ -48,12 +48,13 @@ else:
     )
 
 
-def get_default_config_file_path():
-    return os.path.join(config_dir, 'shakersynth.yml')
+def get_config_file_path():
+    default = os.path.join(config_dir, 'shakersynth.yml')
+    return os.getenv("SHAKERSYNTH_CONFIG_FILE", default)
 
 
 def create_default_config_file():
-    config_file_path = get_default_config_file_path()
+    config_file_path = get_config_file_path()
     if not os.path.exists(config_dir):
         os.mkdir(config_dir)
 
@@ -73,5 +74,5 @@ def load_yaml(config_yaml: str) -> None:
 
 
 create_default_config_file()
-with open(get_default_config_file_path()) as config_file:
+with open(get_config_file_path()) as config_file:
     load_yaml(config_file.read())
