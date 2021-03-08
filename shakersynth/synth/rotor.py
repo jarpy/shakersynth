@@ -8,31 +8,23 @@ log.setLevel(config.log_level)
 
 class RotorSynth():
     def __init__(self):
-        envelope0 = pyo.CosTable([
-            (0000, 0.0),
-            (2000, 1.0),
-            (4000, 1.0),
-            (6000, 0.0),
-            (8191, 0.0),
-        ])
-
-        envelope1 = pyo.CosTable([
-            (1000, 0.0),
-            (4000, 1.0),
-            (6000, 1.0),
-            (8000, 0.0),
-            (8191, 0.0),
-        ])
-
         self.is_running = False
-        self.lfo = pyo.Metro(time=.25, poly=1).play()
+        self.fader0 = pyo.Fader()
+        self.fader1 = pyo.Fader()
 
-        self.vca0 = pyo.TrigEnv(self.lfo, table=envelope0, dur=0.05, mul=0.0)
-        self.vca1 = pyo.TrigEnv(self.lfo, table=envelope1, dur=0.05, mul=0.0)
-        self.osc0 = pyo.Sine(freq=config.rotor_hz, mul=self.vca0)
-        self.osc1 = pyo.Sine(freq=config.rotor_hz, mul=self.vca1)
-        self.filter0 = pyo.Biquad(self.osc0, freq=160.0)
-        self.filter1 = pyo.Biquad(self.osc1, freq=160.0)
+        self.lorenz0 = pyo.Lorenz(pitch=0.1)
+        self.lorenz0_scaled = pyo.Scale(self.lorenz0, outmin=0.3, outmax=0.9)
+        self.lorenz1 = pyo.Lorenz(pitch=0.11)
+        self.lorenz1_scaled = pyo.Scale(self.lorenz1, outmin=0.3, outmax=0.9)
+
+        self.osc0 = pyo.LFO(freq=0.0001, sharp=self.lorenz0_scaled, mul=self.fader0)
+        self.osc1 = pyo.LFO(freq=0.0001, sharp=self.lorenz1_scaled, mul=self.fader1)
+
+        self.filter0 = pyo.Biquad(self.osc0, freq=200)
+        self.filter1 = pyo.Biquad(self.osc1, freq=200)
+
+        self.filter0.out(0)
+        self.filter1.out(1)
 
     def update(self, telemetry: dict):
         """Update synth parameters based on telemetry."""
@@ -54,39 +46,23 @@ class RotorSynth():
             raise NotImplementedError
 
         blades_per_second = revolutions_per_second * blade_count
-        blade_period = 1 / blades_per_second
 
-        # Set the synth pulse interval to trigger for each passing blade.
-        self.lfo.setTime(blade_period)
-
-        # Get louder, as well as faster with rising rotor RPM, with a
-        # fractional exponential curve so you can still feel the signal at
-        # lower RPMs.
-        shake_volume = max(
-            ((telemetry["rotor_rpm_percent"] / 100) ** 0.6) - 0.05,
-            0
-        )
-
-        self.vca0.setMul(shake_volume)
-        self.vca1.setMul(shake_volume)
-
-        # Lower RPM means slower blades, so each "shake" should last longer.
-        shake_duration = blade_period / 6
-        self.vca0.setDur(shake_duration)
-        self.vca1.setDur(shake_duration)
+        self.osc0.setFreq(blades_per_second)
+        self.osc1.setFreq(blades_per_second)
 
     def start(self):
         if self.is_running:
             return
-        self.filter0.out(0)
-        self.filter1.out(1)
+        self.fader0.play()
+        self.fader1.play()
         self.is_running = True
 
     def stop(self):
         if not self.is_running:
             return
-        self.filter0.stop()
-        self.filter1.stop()
+
+        self.fader0.stop()
+        self.fader1.stop()
         self.is_running = False
 
     def _calculate_rotor_rpm(self, telemetry: dict) -> float:

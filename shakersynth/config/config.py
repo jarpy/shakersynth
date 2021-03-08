@@ -10,7 +10,6 @@ audio_api: str = "wasapi"
 sample_rate: int = 44100
 buffer_size: int = 2048
 global_volume: float = 0.90
-rotor_hz: float = 35.0
 
 log_level = getattr(
     logging,
@@ -36,9 +35,6 @@ default_yaml = dedent(
 
     # Set the overall volume between 0 and 1.0.
     global_volume: 0.9
-
-    # Set the frequency of the sound used for the rotor.
-    rotor_hz: 35.0
     """
     ).strip()
 
@@ -74,7 +70,7 @@ def load_yaml(config_yaml: str) -> None:
     this_module = sys.modules[__name__]
 
     for key, value in config_from_file.items():
-        if key in ["global_volume", "rotor_hz"]:
+        if key in ["global_volume"]:
             value = float(value)
         setattr(this_module, key, value)
 

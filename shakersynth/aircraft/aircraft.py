@@ -7,14 +7,19 @@ log = logging.getLogger(__name__)
 log.setLevel(config.log_level)
 
 
-class Aircraft():
+class Aircraft:
     def __init__(self):
         self.synths = [RotorSynth()]
         self.is_running = False
 
     def update(self, telemetry: dict):
         for synth in self.synths:
-            synth.update(telemetry)
+            try:
+                synth.update(telemetry)
+            except NotImplementedError:
+                log.debug(
+                    "%s module not supported by %s" % (telemetry["module"], type(synth))
+                )
 
     def start(self):
         for synth in self.synths:

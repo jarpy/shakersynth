@@ -13,6 +13,9 @@ so you can feel each blade as it passes overhead.
 Play these videos through your bass shakers to (literally) get a feel for what
 Shakersynth can do.
 
+Note: These videos are taken from an older version. The new version has an
+improved effect.
+
   - [UH-1H Demo Video](https://youtu.be/CfWt1DQw7VE)
   - [Mi-8 Demo Video](https://youtu.be/9qU_9t4jrcw)
 
@@ -82,7 +85,6 @@ If you delete the file, it will be recreated with the current defaults.
 | `sample_rate`   | `44100`  | Sample rate of the sound card.      |
 | `buffer_size`   | `2048`   | Audio buffer size in samples.       |
 | `global_volume` | `0.90`   | Output volume from `0.0` to `1.0`.  |
-| `rotor_hz`      | `35.0`   | The frequency of the rotor effect. |
 
 ### Upgrading to a new version
 1. Open PowerShell and run:
