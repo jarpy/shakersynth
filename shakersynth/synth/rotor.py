@@ -46,13 +46,23 @@ class RotorSynth():
             raise NotImplementedError
 
         blades_per_second = revolutions_per_second * blade_count
-
+        log.debug(f"blades_per_second: {blades_per_second}")
         self.osc0.setFreq(blades_per_second)
         self.osc1.setFreq(blades_per_second)
+
+        # Only apply the Lorenz attractor "pixie dust" when the
+        # rotor is actually moving.
+        log.debug(f"Lorenz min: {min(0.3, blades_per_second)}")
+        log.debug(f"Lorenz max: {min(0.9, blades_per_second)}")
+        self.lorenz0_scaled.setOutMin(min(0.3, blades_per_second))
+        self.lorenz0_scaled.setOutMax(min(0.9, blades_per_second))
+        self.lorenz1_scaled.setOutMin(min(0.3, blades_per_second))
+        self.lorenz1_scaled.setOutMax(min(0.9, blades_per_second))
 
     def start(self):
         if self.is_running:
             return
+        log.debug("Started.")
         self.fader0.play()
         self.fader1.play()
         self.is_running = True
@@ -60,7 +70,7 @@ class RotorSynth():
     def stop(self):
         if not self.is_running:
             return
-
+        log.debug("Stopped.")
         self.fader0.stop()
         self.fader1.stop()
         self.is_running = False
