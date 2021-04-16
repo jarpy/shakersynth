@@ -26,6 +26,11 @@ end
 
 function LuaExportAfterNextFrame()
    local aircraft = LoGetSelfData()
+   
+   if not aircraft then
+      return
+   end
+   
    local module = aircraft.Name
    local main_panel = GetDevice(0)
 
