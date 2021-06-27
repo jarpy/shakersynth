@@ -1,5 +1,8 @@
 default: test lint
 
+docs:
+	pdoc shakersynth
+
 test:
 	pytest --cov=shakersynth --cov-report=html
 
