@@ -73,8 +73,8 @@ On my system, that becomes:
 C:\Users\jarpy\AppData\Local\Shakersynth\shakersynth.yml
 ```
 
-Edit this file to set some important options like the sample rate, output volume
-and frequency of the sound sent to the bass shakers.
+You may need to edit this file to set some important options like the
+sample rate and output volume.
 
 If you delete the file, it will be recreated with the current defaults.
 
