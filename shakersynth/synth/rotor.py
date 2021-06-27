@@ -29,8 +29,14 @@ class RotorSynth():
         # These are the actual signal sources. Volume is controlled by the
         # fader objects and the "sharpness" of the wave is modulated by the
         # Lorenz attractors.
-        self.osc0 = pyo.LFO(freq=0.0001, sharp=self.lorenz0_scaled, mul=self.fader0)
-        self.osc1 = pyo.LFO(freq=0.0001, sharp=self.lorenz1_scaled, mul=self.fader1)
+        self.osc0 = pyo.LFO(
+            freq=0.0001,
+            sharp=self.lorenz0_scaled,
+            mul=self.fader0)
+        self.osc1 = pyo.LFO(
+            freq=0.0001,
+            sharp=self.lorenz1_scaled,
+            mul=self.fader1)
 
         # Then we'll filter the signals so that only low frequencies are
         # sent to the shakers.

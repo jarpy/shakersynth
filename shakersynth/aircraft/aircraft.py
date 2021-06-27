@@ -17,9 +17,9 @@ class Aircraft:
             try:
                 synth.update(telemetry)
             except NotImplementedError:
+                module = telemetry["module"]
                 log.debug(
-                    "%s module not supported by %s" % (telemetry["module"], type(synth))
-                )
+                    "%s module not supported by %s" % (module, type(synth)))
 
     def start(self):
         for synth in self.synths:

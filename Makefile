@@ -4,7 +4,7 @@ test:
 	pytest --cov=shakersynth --cov-report=html
 
 lint:
-	flake8 --exclude=venv .
+	flake8 --exclude=venv,.eggs,build .
 	mypy shakersynth
 
 test-watch:
