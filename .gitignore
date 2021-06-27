@@ -141,3 +141,4 @@ cython_debug/
 
 # VSCode stuff
 .vscode/.ropeproject
+.vscode/settings.json
