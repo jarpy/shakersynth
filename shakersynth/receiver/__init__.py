@@ -1,1 +1,1 @@
-"""Contains modules that can receive telemetry data."""
+"""Contains modules that receive telemetry data."""
