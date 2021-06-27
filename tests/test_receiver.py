@@ -25,7 +25,7 @@ def mi8():
     receiver = ShakersynthReceiver()
     receiver._receive_udp = Mock()
     receiver._receive_udp.return_value = mi8_payload
-    return receiver.get_telemetry()
+    return receiver.receive()
 
 
 @fixture
@@ -33,7 +33,7 @@ def huey():
     receiver = ShakersynthReceiver()
     receiver._receive_udp = Mock()
     receiver._receive_udp.return_value = huey_payload
-    return receiver.get_telemetry()
+    return receiver.receive()
 
 
 def test_module_name_is_short_and_lowercase(mi8, huey):

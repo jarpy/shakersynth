@@ -29,7 +29,7 @@ class ShakersynthReceiver():
         """
         return self.listener.recv(1500)
 
-    def get_telemetry(self) -> dict:
+    def receive(self) -> dict:
         """Return the next available telemetry payload.
 
         Returns an empty dictionary if nothing is received within 1 second.

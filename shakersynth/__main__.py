@@ -60,7 +60,7 @@ def main():
 
     # A little state machine to keep track of our aircraft and telemetry.
     while True:
-        telemetry = receiver.get_telemetry()
+        telemetry = receiver.receive()
         running = aircraft.is_running
 
         if telemetry and not running:
