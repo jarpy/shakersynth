@@ -7,4 +7,5 @@ pytest
 pytest-cov
 pytest-watch
 pyyaml
+types-PyYAML
 wxPython
