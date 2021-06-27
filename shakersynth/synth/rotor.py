@@ -9,8 +9,10 @@ log.setLevel(config.log_level)
 class RotorSynth():
     """Effect synthesizer for helicopter rotor vibrations.
 
-    This a stereo (2 channel) effect."""
+    This a stereo (2 channel) effect.
+    """
     def __init__(self):
+        """Create a new RotorSynth."""
         self.is_running = False
 
         # Create two volume faders which we'll use to control
@@ -49,7 +51,16 @@ class RotorSynth():
         self.filter1.out(1)
 
     def update(self, telemetry: dict):
-        """Update synth parameters based on telemetry."""
+        """Update synth parameters based on `telemetry`.
+
+        Each time `update` is called with a `telemetry` payload, the
+        `RotorSynth` will adjust its synthesis parameters to match.
+
+        `telemetry` must contain the key `rotor_rpm_percent` to have
+        any effect.
+
+        Supports the Mi-8 and UH-1H modules.
+        """
         rpm = self._calculate_rotor_rpm(telemetry)
 
         # Protect against divide-by-zero errors.
@@ -82,6 +93,7 @@ class RotorSynth():
         self.lorenz1_scaled.setOutMax(min(0.9, blades_per_second))
 
     def start(self):
+        """Start the `RotorSynth`, activating audio output."""
         if self.is_running:
             return
         log.debug("Started.")
@@ -90,6 +102,7 @@ class RotorSynth():
         self.is_running = True
 
     def stop(self):
+        """Stop the `RotorSynth`, deactivating audio output."""
         if not self.is_running:
             return
         log.debug("Stopped.")

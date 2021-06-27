@@ -12,14 +12,17 @@ class ShakersynthReceiver():
     """Receive YAML encoded telemetry from Shakersynth's DCS export script."""
 
     def __init__(self, bind_addr="", port=17707):
-        """Create a telemetry receiver listening on a UDP socket."""
+        """Create a `ShakersynthReceiver` listening on a UDP socket.
+
+        If `port` is `None`, no socket will be opened. Useful when the
+        `ShakersynthReceiver` is under test."""
         self.packet_count = 0
         if port is not None:
             self.listener = socket.socket(type=socket.SOCK_DGRAM)
             self.listener.bind((bind_addr, port))
 
     @func_set_timeout(1)
-    def receive_udp(self):
+    def _receive_udp(self):
         """Receive a UDP packet.
 
         Raises FunctionTimedOut if one is not received within 1 second.
@@ -32,7 +35,7 @@ class ShakersynthReceiver():
         Returns an empty dictionary if nothing is received within 1 second.
         """
         try:
-            payload = self.receive_udp()
+            payload = self._receive_udp()
             self.packet_count += 1
         except FunctionTimedOut:
             log.debug('No telemetry...')

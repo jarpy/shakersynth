@@ -25,16 +25,16 @@ huey_payload = huey_payload.strip().encode()
 @fixture
 def mi8():
     receiver = ShakersynthReceiver()
-    receiver.receive_udp = Mock()
-    receiver.receive_udp.return_value = mi8_payload
+    receiver._receive_udp = Mock()
+    receiver._receive_udp.return_value = mi8_payload
     return receiver.get_telemetry()
 
 
 @fixture
 def huey():
     receiver = ShakersynthReceiver()
-    receiver.receive_udp = Mock()
-    receiver.receive_udp.return_value = huey_payload
+    receiver._receive_udp = Mock()
+    receiver._receive_udp.return_value = huey_payload
     return receiver.get_telemetry()
 
 
