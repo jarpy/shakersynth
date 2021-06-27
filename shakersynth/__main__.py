@@ -15,13 +15,10 @@ log.setLevel(config.log_level)
 def main():
     print("\n" + "-" * 35 + "Shakersynth" + "-" * 35)
     # Audio synthesis setup.
-    api = config.audio_api
-    print(f"Using audio API: {api}")
     server = pyo.Server(
         nchnls=2,
         duplex=0,
         buffersize=config.buffer_size,
-        winhost=api,
         sr=config.sample_rate
     )
     server.setVerbosity(1)

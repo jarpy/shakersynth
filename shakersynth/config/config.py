@@ -18,15 +18,6 @@ log_level = getattr(
 
 default_yaml = dedent(
     """
-    # Select and configure the audio API.
-    # Options on Windows are "mme", "directsound", "asio", "wasapi", "wdm-ks".
-    #
-    # See also: http://ajaxsoundstudio.com/pyodoc/winaudioinspect.html
-    #
-    # WARNING: This option does not currently work. The default API is always
-    # used!
-    audio_api: wasapi
-
     # Be sure to use the sample rate that your sound card expects.
     sample_rate: 44100
 
