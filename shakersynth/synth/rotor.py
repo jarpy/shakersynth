@@ -7,22 +7,38 @@ log.setLevel(config.log_level)
 
 
 class RotorSynth():
+    """Effect synthesizer for helicopter rotor vibrations.
+
+    This a stereo (2 channel) effect."""
     def __init__(self):
         self.is_running = False
+
+        # Create two volume faders which we'll use to control
+        # the volume of the effect.
         self.fader0 = pyo.Fader()
         self.fader1 = pyo.Fader()
 
+        # These Lorenz attractors create randomness, which we will use to
+        # modulate the signal a little. It adds character and makes the
+        # effect feel less repetitive.
         self.lorenz0 = pyo.Lorenz(pitch=0.1)
         self.lorenz0_scaled = pyo.Scale(self.lorenz0, outmin=0.3, outmax=0.9)
-        self.lorenz1 = pyo.Lorenz(pitch=0.11)
+        self.lorenz1 = pyo.Lorenz(pitch=0.11)  # Slightly different for stereo.
         self.lorenz1_scaled = pyo.Scale(self.lorenz1, outmin=0.3, outmax=0.9)
 
+        # These are the actual signal sources. Volume is controlled by the
+        # fader objects and the "sharpness" of the wave is modulated by the
+        # Lorenz attractors.
         self.osc0 = pyo.LFO(freq=0.0001, sharp=self.lorenz0_scaled, mul=self.fader0)
         self.osc1 = pyo.LFO(freq=0.0001, sharp=self.lorenz1_scaled, mul=self.fader1)
 
+        # Then we'll filter the signals so that only low frequencies are
+        # sent to the shakers.
         self.filter0 = pyo.Biquad(self.osc0, freq=200)
         self.filter1 = pyo.Biquad(self.osc1, freq=200)
 
+        # Finally, hook the output of the filters up to the sound card's left
+        # and right channels.
         self.filter0.out(0)
         self.filter1.out(1)
 
@@ -30,14 +46,14 @@ class RotorSynth():
         """Update synth parameters based on telemetry."""
         rpm = self._calculate_rotor_rpm(telemetry)
 
+        # Protect against divide-by-zero errors.
         if rpm == 0:
             rpm = 0.00000001
-
-        module = telemetry["module"]
 
         # Revolutions per second is more useful than RPM.
         revolutions_per_second = rpm / 60.0
 
+        module = telemetry["module"]
         if(module == "mi-8"):
             blade_count = 5
         elif(module == "uh-1h"):
