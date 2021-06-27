@@ -18,7 +18,7 @@ class Aircraft:
         self.synths = [RotorSynth()]
         self.is_running = False
 
-    def update(self, telemetry: dict):
+    def update(self, telemetry: dict) -> None:
         """Update all synths with the `telemetry` payload."""
         for synth in self.synths:
             try:
@@ -28,14 +28,14 @@ class Aircraft:
                 log.debug(
                     "%s module not supported by %s" % (module, type(synth)))
 
-    def start(self):
+    def start(self) -> None:
         """Start all synths, enabling audio output."""
         for synth in self.synths:
             log.debug("Starting synth: %s" % type(synth))
             synth.start()
         self.is_running = True
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop all synths, disabling audio output."""
         for synth in self.synths:
             log.debug("Stopping synth: %s" % type(synth))

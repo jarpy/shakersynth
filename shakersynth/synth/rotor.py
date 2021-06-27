@@ -50,7 +50,7 @@ class RotorSynth():
         self.filter0.out(0)
         self.filter1.out(1)
 
-    def update(self, telemetry: dict):
+    def update(self, telemetry: dict) -> None:
         """Update synth parameters based on `telemetry`.
 
         Each time `update` is called with a `telemetry` payload, the
@@ -92,7 +92,7 @@ class RotorSynth():
         self.lorenz1_scaled.setOutMin(min(0.3, blades_per_second))
         self.lorenz1_scaled.setOutMax(min(0.9, blades_per_second))
 
-    def start(self):
+    def start(self) -> None:
         """Start the `RotorSynth`, activating audio output."""
         if self.is_running:
             return
@@ -101,7 +101,7 @@ class RotorSynth():
         self.fader1.play()
         self.is_running = True
 
-    def stop(self):
+    def stop(self) -> None:
         """Stop the `RotorSynth`, deactivating audio output."""
         if not self.is_running:
             return

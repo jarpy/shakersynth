@@ -7,8 +7,8 @@ test:
 	pytest --cov=shakersynth --cov-report=html
 
 lint:
-	flake8 --exclude=venv,.eggs,build .
-	mypy shakersynth
+	flake8 --config=setup.cfg
+	mypy --config-file=setup.cfg .
 
 test-watch:
 	pytest-watch --beforerun=clear --runner='make'

@@ -41,12 +41,12 @@ else:
     )
 
 
-def get_config_file_path():
+def get_config_file_path() -> str:
     default = os.path.join(config_dir, 'shakersynth.yml')
     return os.getenv("SHAKERSYNTH_CONFIG_FILE", default)
 
 
-def create_default_config_file():
+def create_default_config_file() -> None:
     config_file_path = get_config_file_path()
     if not os.path.exists(config_dir):
         os.mkdir(config_dir)

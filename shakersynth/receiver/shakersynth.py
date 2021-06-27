@@ -22,14 +22,14 @@ class ShakersynthReceiver():
             self.listener.bind((bind_addr, port))
 
     @func_set_timeout(1)
-    def _receive_udp(self):
+    def _receive_udp(self) -> bytes:
         """Receive a UDP packet.
 
         Raises FunctionTimedOut if one is not received within 1 second.
         """
         return self.listener.recv(1500)
 
-    def get_telemetry(self):
+    def get_telemetry(self) -> dict:
         """Return the next available telemetry payload.
 
         Returns an empty dictionary if nothing is received within 1 second.

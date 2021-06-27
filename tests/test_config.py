@@ -3,9 +3,6 @@ from textwrap import dedent
 
 
 def assert_defaults():
-    assert type(config.audio_api) is str
-    assert config.audio_api == "wasapi"
-
     assert type(config.sample_rate) is int
     assert config.sample_rate == 44100
 
@@ -21,7 +18,6 @@ def test_defaults():
 
 
 def test_default_yaml_matches_real_defaults():
-    config.audio_api = None
     config.sample_rate = None
     config.buffer_size = None
     config.global_volume = None
@@ -32,14 +28,12 @@ def test_default_yaml_matches_real_defaults():
 def test_can_set_values_from_yaml():
     yaml = dedent(
         """
-        audio_api: asio
         sample_rate: 48000
         buffer_size: 512
         global_volume: 0.66
         """
     ).strip()
     config.load_yaml(yaml)
-    assert config.audio_api == "asio"
     assert config.sample_rate == 48000
     assert config.buffer_size == 512
     assert config.global_volume == 0.66

@@ -4,5 +4,14 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"cSpell.words": [
+			"Py's",
+			"nchnls",
+			"numpy",
+			"umath",
+			"varargs",
+			"virtualenv"
+		]
+	}
 }

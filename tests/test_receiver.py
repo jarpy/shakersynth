@@ -9,8 +9,7 @@ mi8_payload = dedent(
     module: Mi-8MT
     rotor_rpm_percent: 95.332
     """
-)
-mi8_payload = mi8_payload.strip().encode()
+).strip().encode()
 
 huey_payload = dedent(
     """
@@ -18,8 +17,7 @@ huey_payload = dedent(
     module: UH-1H
     rotor_rpm_percent: 90.167
     """
-)
-huey_payload = huey_payload.strip().encode()
+).strip().encode()
 
 
 @fixture
