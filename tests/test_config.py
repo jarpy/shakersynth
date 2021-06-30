@@ -10,7 +10,7 @@ def assert_defaults():
     assert config.buffer_size == 2048
 
     assert type(config.global_volume) is float
-    assert config.global_volume == 0.90
+    assert config.global_volume == 0.70
 
 
 def test_defaults():
