@@ -59,7 +59,7 @@ class RotorSynth():
         `telemetry` must contain the key `rotor_rpm_percent` to have
         any effect.
 
-        Supports the Mi-8 and UH-1H modules.
+        Supports the Mi-8, Mi-24, and UH-1H modules.
         """
         rpm = self._calculate_rotor_rpm(telemetry)
 
