@@ -83,7 +83,7 @@ If you delete the file, it will be recreated with the current defaults.
 | --------------- | -------- | ----------------------------------- |
 | `sample_rate`   | `44100`  | Sample rate of the sound card.      |
 | `buffer_size`   | `2048`   | Audio buffer size in samples.       |
-| `global_volume` | `0.90`   | Output volume from `0.0` to `1.0`.  |
+| `global_volume` | `0.7`    | Output volume from `0.0` to `1.0`.  |
 
 ### Upgrading to a new version
 1. Open PowerShell and run:
