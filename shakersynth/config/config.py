@@ -21,11 +21,14 @@ default_yaml = dedent(
     # Be sure to use the sample rate that your sound card expects.
     sample_rate: 44100
 
-    # If you get audio glitches, try increasing the buffer.
+    # If you get audio glitches, try increasing the buffer to 4096.
     buffer_size: 2048
 
     # Set the overall volume between 0 and 1.0.
-    global_volume: 0.9
+    #
+    # Values above 0.7 can cause clipping distortion (at least on
+    # on the author's system).
+    global_volume: 0.7
     """
     ).strip()
 
