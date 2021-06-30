@@ -10,11 +10,20 @@ def rotor():
 
 def test_calculate_rotor_rpm_is_correct_for_mi8(rotor):
     telemetry = {
-        "module": "mi-8",
+        "module": "mi-8mt",
         "rotor_rpm_percent": 95.0
     }
     rpm = rotor._calculate_rotor_rpm(telemetry)
     assert isclose(rpm, 200)
+
+
+def test_calculate_rotor_rpm_is_correct_for_mi24(rotor):
+    telemetry = {
+        "module": "mi-24p",
+        "rotor_rpm_percent": 95.0
+    }
+    rpm = rotor._calculate_rotor_rpm(telemetry)
+    assert isclose(rpm, 280)
 
 
 def test_calculate_rotor_rpm_is_correct_for_huey(rotor):

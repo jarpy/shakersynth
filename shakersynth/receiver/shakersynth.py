@@ -49,16 +49,11 @@ class ShakersynthReceiver():
 
         # Capital letters hurt your hands.
         try:
-            module = telemetry["module"].lower()
+            telemetry["module"] = telemetry["module"].lower()
         except KeyError:
             # No module is active. Return an empty telemetry object signifying
             # that we are not currently in an aircraft.
             return {}
-
-        if module == "mi-8mt":  # Nobody says "Mi-8MT".
-            module = "mi-8"     # We just say "Mi-8".
-
-        telemetry["module"] = module
 
         if self.packet_count % 60 == 0:
             log.debug("Telemetry sample: %s" % telemetry)

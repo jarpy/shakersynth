@@ -71,7 +71,7 @@ class RotorSynth():
         revolutions_per_second = rpm / 60.0
 
         module = telemetry["module"]
-        if(module == "mi-8"):
+        if(module == "mi-8mt" or module == "mi-24p"):
             blade_count = 5
         elif(module == "uh-1h"):
             blade_count = 2
@@ -115,10 +115,13 @@ class RotorSynth():
         module = telemetry["module"]
         rpm_percent = telemetry["rotor_rpm_percent"]
 
-        if(module == "mi-8"):
+        if(module == "mi-8mt"):
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
             # But 200 gives better results in the sim.
             return float(rpm_percent * (200 / 95))
+        elif(module == "mi-24p"):
+            # 280 gives good sync on the Hind, but that seems way off??
+            return float(rpm_percent * (280 / 95))
         elif(module == "uh-1h"):
             # 90 gauge RPM == 324 real rotor RPM. [3]
             return float(rpm_percent * (324 / 90))

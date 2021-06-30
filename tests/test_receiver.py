@@ -11,6 +11,14 @@ mi8_payload = dedent(
     """
 ).strip().encode()
 
+mi24_payload = dedent(
+    """
+    ---
+    module: Mi-24P
+    rotor_rpm_percent: 95.332
+    """
+).strip().encode()
+
 huey_payload = dedent(
     """
     ---
@@ -29,6 +37,14 @@ def mi8():
 
 
 @fixture
+def mi24():
+    receiver = ShakersynthReceiver()
+    receiver._receive_udp = Mock()
+    receiver._receive_udp.return_value = mi24_payload
+    return receiver.receive()
+
+
+@fixture
 def huey():
     receiver = ShakersynthReceiver()
     receiver._receive_udp = Mock()
@@ -36,11 +52,12 @@ def huey():
     return receiver.receive()
 
 
-def test_module_name_is_short_and_lowercase(mi8, huey):
-    assert mi8["module"] == "mi-8"
+def test_module_name_lowercase(mi8, mi24, huey):
+    assert mi8["module"] == "mi-8mt"
+    assert mi24["module"] == "mi-24p"
     assert huey["module"] == "uh-1h"
 
 
-def test_rotor_rpm_percent_is_a_float(mi8, huey):
-    for chopper in [mi8, huey]:
+def test_rotor_rpm_percent_is_a_float(mi8, mi24, huey):
+    for chopper in [mi8, mi24, huey]:
         assert type(chopper["rotor_rpm_percent"]) is float
