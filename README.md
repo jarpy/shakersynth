@@ -21,14 +21,13 @@ improved effect.
 
 ### Development Status
 
-Currently, Shakersynth provides _only_ rotor vibrations for the Mi-8 and
-UH-1H. It's best to run it alongside SimShaker Sound Module, which does a good
-job of handling a wide range of effects that don't benefit so much from the
+Currently, Shakersynth provides _only_ rotor vibrations for the Mi-8 , Mi-24,
+and UH-1H. It's best to run it alongside SimShaker Sound Module, which does a
+good job of handling a wide range of effects that don't benefit so much from the
 real-time synthesis approach.
 
 Over time, Shakersynth could support more effects and more aircraft, but the
-initial priority was to get a really good rotor effect for the Huey and the
-Mi-8.
+initial priority was to get a really good rotor effect for helicopters.
 
 ### Trying it out
 
