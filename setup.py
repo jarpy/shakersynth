@@ -5,7 +5,7 @@ with open("README.md", "r") as readme:
 
 setuptools.setup(
     name="Shakersynth",
-    version="0.5.1",
+    version="0.6.0",
     author="Toby McLaughlin",
     author_email="toby@jarpy.net",
     description="Bass shaker synthesizer for DCS World.",

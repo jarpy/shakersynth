@@ -1,3 +1,8 @@
+- 0.6.0
+  - Add rotor effect for Mi-24P.
+  - Reduce startup time.
+  - Reduce default volume to avoid clipping (Huey, in particular).
+
 - 0.5.1
   - Prevent small rotor vibration when rotor is not moving.
 
