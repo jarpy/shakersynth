@@ -25,14 +25,16 @@ def main():
 
     # Map audio outputs from internal numbers (which can be sparse and large)
     # to a friendly, 1-indexed, monotonic series for the user.
+    print("Scanning audio devices...")
     output_devices = pyo.pa_get_devices_infos()[1]
+    default_api = pyo.pa_get_default_host_api()
     friendly_to_internal = {}
 
     print("Found these audio outputs:")
     device_details = enumerate(output_devices.items())
     for friendly_index, (internal_index, properties) in device_details:
         # Only list devices that are available using the default audio API.
-        if properties["host api index"] == pyo.pa_get_default_host_api():
+        if properties["host api index"] == default_api:
             friendly_index += 1
             friendly_to_internal[friendly_index] = internal_index
             print(f"  {friendly_index}: {properties['name']}")
