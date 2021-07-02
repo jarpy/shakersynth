@@ -1,5 +1,7 @@
 ## Shakersynth
 
+![python-package-workflow](https://github.com/jarpy/shakersynth/actions/workflows/python-package.yml/badge.svg)
+
 Shakersynth is an alternative approach to driving tactile transducers (aka.
 bass shakers) from DCS World. It uses parametric real-time audio synthesis,
 provided by [pyo], enabling it to create sounds that are dynamically derived
