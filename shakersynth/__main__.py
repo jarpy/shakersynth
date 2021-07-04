@@ -3,6 +3,7 @@
 import logging
 import pyo
 import sys
+import time
 from shakersynth.config import config
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
@@ -50,10 +51,6 @@ def main():
     # Receive Telemetry from the Shakersynth DCS export script.
     receiver = ShakersynthReceiver()
 
-    # All telemetry processing and sound synthesis happens in the aircraft
-    # model.
-    aircraft = Aircraft()
-
     print("*" * 80)
     print("ShakerSynth now running.")
     print("Press ctrl+c to exit.")
@@ -61,15 +58,18 @@ def main():
     log.info("Waiting for initial telemetry.")
 
     # A little state machine to keep track of our aircraft and telemetry.
+    running = False
     while True:
         telemetry = receiver.receive()
-        running = aircraft.is_running
 
         if telemetry and not running:
             # Then we have just started a mission.
-            log.info("Starting new aircraft: %s" % telemetry["module"])
-            aircraft.update(telemetry)
+            module = telemetry['module']
+            log.info(f"Starting new aircraft: {module}")
+            aircraft = Aircraft(module)
             aircraft.start()
+            aircraft.update(telemetry)
+            running = aircraft.is_running
 
         elif telemetry and running:
             # Then things are ticking along nicely.
@@ -78,8 +78,11 @@ def main():
         elif running and not telemetry:
             # Then we got an empty telemetry object while running an aircraft.
             # This signifies that we left the mission or lost contact with DCS.
-            log.info("Shutting down aircraft.")
+            log.info(f"Shutting down aircraft: {aircraft.module}")
             aircraft.stop()
+            running = aircraft.is_running
+            time.sleep(0.1)
+            del(aircraft)
 
 
 if __name__ == "__main__":

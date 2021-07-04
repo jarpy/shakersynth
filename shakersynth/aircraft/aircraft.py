@@ -6,6 +6,10 @@ from typing import Dict  # noqa: F401
 log = logging.getLogger(__name__)
 log.setLevel(config.log_level)
 
+helicopters = ['mi-8mt', 'mi-24p', 'uh-1h']
+fixed_wings = ['a10-c_2']
+all_modules = helicopters + fixed_wings
+
 
 class Aircraft:
     """An `Aircraft` is the current aircraft/module the player is controlling.
@@ -13,20 +17,19 @@ class Aircraft:
     The `Aircraft` contains instances of `shakersynth.synth` in a list.
     Calling `update` on the `Aircraft` causes each synth to also be updated.
     """
-    def __init__(self):
-        """Create a new `Aircraft, with a collection of synths."""
-        self.synths = [RotorSynth()]
+    def __init__(self, module: str):
+        """Create a new `Aircraft`, with a collection of synths."""
+        self.module = module
+        self.synths = []
         self.is_running = False
+
+        if self.module in helicopters:
+            self.synths.append(RotorSynth())
 
     def update(self, telemetry: dict) -> None:
         """Update all synths with the `telemetry` payload."""
         for synth in self.synths:
-            try:
-                synth.update(telemetry)
-            except NotImplementedError:
-                module = telemetry["module"]
-                log.debug(
-                    "%s module not supported by %s" % (module, type(synth)))
+            synth.update(telemetry)
 
     def start(self) -> None:
         """Start all synths, enabling audio output."""

@@ -21,9 +21,9 @@ while True:
         })
         if rotor_rpm_percent < 95:
             rotor_rpm_percent += 0.05
-        sleep(1/60)
+        sleep(1/240)
     transmit({})
-    sleep(5)
+    sleep(2)
 
     print("Starting fearsome Mi-24, Comrade!")
     rotor_rpm_percent = 0.01
@@ -34,9 +34,9 @@ while True:
         })
         if rotor_rpm_percent < 95:
             rotor_rpm_percent += 0.05
-        sleep(1/60)
+        sleep(1/240)
     transmit({})
-    sleep(5)
+    sleep(2)
 
     print("Starting wimpy little toy helicopter from America.")
     rotor_rpm_percent = 0.01
@@ -47,6 +47,19 @@ while True:
         })
         if rotor_rpm_percent < 90:
             rotor_rpm_percent += 0.05
-        sleep(1/60)
+        sleep(1/240)
     transmit({})
-    sleep(5)
+    sleep(2)
+
+    print("Starting the awesome Hog!")
+    rotor_rpm_percent = 0.01
+    for n in range(0, 2000):
+        transmit({
+            "module": "A10-C_2",
+            "rotor_rpm_percent": rotor_rpm_percent,
+        })
+        if rotor_rpm_percent < 90:
+            rotor_rpm_percent += 0.05
+        sleep(1/240)
+    transmit({})
+    sleep(2)
