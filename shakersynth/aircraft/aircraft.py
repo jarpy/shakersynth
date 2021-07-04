@@ -29,7 +29,10 @@ class Aircraft:
     def update(self, telemetry: dict) -> None:
         """Update all synths with the `telemetry` payload."""
         for synth in self.synths:
-            synth.update(telemetry)
+            try:
+                synth.update(telemetry)
+            except NotImplementedError:
+                log.error(f"{type(synth)}: unsupported module '{self.module}'")
 
     def start(self) -> None:
         """Start all synths, enabling audio output."""

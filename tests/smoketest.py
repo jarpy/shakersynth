@@ -12,6 +12,15 @@ def transmit(telemetry: dict):
 
 
 while True:
+    print("Starting module we don't support.")
+    for n in range(0, 2):
+        transmit({
+            "module": "ornithopter",
+        })
+        sleep(1/240)
+    transmit({})
+    sleep(2)
+
     print("Starting glorious Mi-8, Commander!")
     rotor_rpm_percent = 0.01
     for n in range(0, 2000):

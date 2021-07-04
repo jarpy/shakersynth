@@ -61,6 +61,14 @@ class RotorSynth():
 
         Supports the Mi-8, Mi-24, and UH-1H modules.
         """
+        module = telemetry["module"]
+        if(module == "mi-8mt" or module == "mi-24p"):
+            blade_count = 5
+        elif(module == "uh-1h"):
+            blade_count = 2
+        else:
+            raise NotImplementedError
+
         rpm = self._calculate_rotor_rpm(telemetry)
 
         # Protect against divide-by-zero errors.
@@ -69,14 +77,6 @@ class RotorSynth():
 
         # Revolutions per second is more useful than RPM.
         revolutions_per_second = rpm / 60.0
-
-        module = telemetry["module"]
-        if(module == "mi-8mt" or module == "mi-24p"):
-            blade_count = 5
-        elif(module == "uh-1h"):
-            blade_count = 2
-        else:
-            raise NotImplementedError
 
         blades_per_second = revolutions_per_second * blade_count
         log.debug(f"blades_per_second: {blades_per_second}")

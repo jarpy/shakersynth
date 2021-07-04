@@ -1,6 +1,6 @@
 from shakersynth.synth.rotor import RotorSynth
 from math import isclose
-from pytest import fixture
+from pytest import fixture, raises
 
 
 @fixture
@@ -33,3 +33,8 @@ def test_calculate_rotor_rpm_is_correct_for_huey(rotor):
     }
     rpm = rotor._calculate_rotor_rpm(telemetry)
     assert isclose(rpm, 324)
+
+
+def test_unsupported_module_raises_exception(rotor):
+    with raises(NotImplementedError):
+        rotor.update({"module": "whirlybird-5000"})
