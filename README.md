@@ -75,16 +75,11 @@ C:\Users\jarpy\AppData\Local\Shakersynth\shakersynth.yml
 ```
 
 You may need to edit this file to set some important options like the
-sample rate and output volume.
+sample rate and output volume. It is written in the YAML format.
 
-If you delete the file, it will be recreated with the current defaults.
-
-#### Configuration Options
-| Option          | Default  | Description                         |
-| --------------- | -------- | ----------------------------------- |
-| `sample_rate`   | `44100`  | Sample rate of the sound card.      |
-| `buffer_size`   | `2048`   | Audio buffer size in samples.       |
-| `global_volume` | `0.7`    | Output volume from `0.0` to `1.0`.  |
+Individual configuration options are documented with comments in the file.
+If you delete the file, it will be recreated with the current defaults, so
+if anything goes wrong, just delete it and run Shakersynth again.
 
 ### Upgrading to a new version
 1. Open PowerShell and run:

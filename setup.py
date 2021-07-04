@@ -29,6 +29,7 @@ setuptools.setup(
     python_requires='>=3.7',
     install_requires=[
         'func-timeout',
+        'python-configuration[yaml]',
         'pyo',
         'pyaml',
         'wxPython',
