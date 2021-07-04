@@ -1,3 +1,6 @@
+- 0.6.1
+  - Don't apply rotor effect to fixed-wing aircraft.
+
 - 0.6.0
   - Add rotor effect for Mi-24P.
   - Reduce startup time.
