@@ -42,10 +42,6 @@ is a little bit fiddly. Sorry about that.
    ```powershell
    pip install shakersynth
    ```
-3. Save [Shakersynth.lua] to the folder:
-   ```
-   %UserProfile%\Saved Games\DCS\Scripts
-   ```
 4. Edit this file:
    ```
    %UserProfile%\Saved Games\DCS\Scripts\Export.lua
@@ -82,16 +78,10 @@ If you delete the file, it will be recreated with the current defaults, so
 if anything goes wrong, just delete it and run Shakersynth again.
 
 ### Upgrading to a new version
-1. Open PowerShell and run:
-   ```powershell
-   pip install --upgrade shakersynth
-   ```
-2. Save the latest version of [Shakersynth.lua] to the folder:
-   ```
-   %UserProfile%\Saved Games\DCS\Scripts
-   ```
-   :point_up: This step is only needed after a major version change, like
-   `0.6.0` -> `1.0.0`.
+Open PowerShell and run:
+```powershell
+pip install --upgrade shakersynth
+```
 
 [pyo]: https://pypi.org/project/pyo/
 [Python 3]: https://www.python.org/downloads/windows/

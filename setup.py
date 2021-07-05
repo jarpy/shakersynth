@@ -5,7 +5,7 @@ with open("README.md", "r") as readme:
 
 setuptools.setup(
     name="Shakersynth",
-    version="0.6.1",
+    version="0.7.0",
     author="Toby McLaughlin",
     author_email="toby@jarpy.net",
     description="Bass shaker synthesizer for DCS World.",
@@ -35,4 +35,6 @@ setuptools.setup(
         'wxPython',
     ],
     scripts=['bin/shakersynth.bat'],
+    package_data={'': ['Shakersynth.lua']},
+    include_package_data=True,
 )

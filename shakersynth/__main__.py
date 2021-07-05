@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
 import logging
+import os
+import platform
 import pyo
 import sys
 import time
+from importlib.resources import read_text
 from shakersynth.config.loader import create_default_config_file, load_config
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
@@ -14,9 +17,28 @@ log = logging.getLogger("main")
 log.setLevel(config.log.level)
 
 
+def install_lua():
+    if not platform.system() == 'Windows':
+        log.info('Skipping export script setup: not running on Windows.')
+        return
+
+    user_profile = os.path.expandvars('%UserProfile%')
+    for dcs in ['DCS', 'DCS.openbeta']:
+        script_dir = os.path.join(user_profile, 'Saved Games', dcs, 'Scripts')
+        script_file = os.path.join(script_dir, 'Shakersynth.lua')
+        if os.path.isdir(script_dir):
+            with open(script_file, 'w') as lua:
+                try:
+                    lua.write(read_text(__package__, 'Shakersynth.lua'))
+                except Exception:
+                    log.error(f"Failed to write export script: {script_file}")
+
+
 def main():
     print("\n" + "-" * 35 + "Shakersynth" + "-" * 35)
     create_default_config_file()
+    install_lua()
+
     # Audio synthesis setup.
     server = pyo.Server(
         nchnls=2,
