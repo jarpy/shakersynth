@@ -1,8 +1,7 @@
-import config
 import pyo
 import os
 
-from shakersynth.config.loader import default_yaml, get_config_file_path
+from shakersynth.config.loader import default_yaml
 
 # Create a silent pyo server so that we can create audio objects without
 # them complaining that there is no server.

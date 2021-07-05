@@ -1,7 +1,4 @@
-import os.path
-from importlib import reload
 from shakersynth.config import loader
-from pytest import fixture, skip
 from textwrap import dedent
 
 config = loader.load_config()
