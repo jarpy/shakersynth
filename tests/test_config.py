@@ -1,50 +1,33 @@
-from shakersynth.config import config
+from shakersynth.config import loader
 from textwrap import dedent
+
+config = loader.load_config()
 
 
 def assert_defaults():
-    assert type(config.sample_rate) is int
-    assert config.sample_rate == 44100
+    assert type(config.audio.sample_rate) is int
+    assert config.audio.sample_rate == 44100
 
-    assert type(config.buffer_size) is int
-    assert config.buffer_size == 2048
+    assert type(config.audio.buffer_size) is int
+    assert config.audio.buffer_size == 2048
 
-    assert type(config.global_volume) is float
-    assert config.global_volume == 0.70
+    assert type(config.audio.global_volume) is float
+    assert config.audio.global_volume == 0.70
 
 
 def test_defaults():
     assert_defaults()
 
 
-def test_default_yaml_matches_real_defaults():
-    config.sample_rate = None
-    config.buffer_size = None
-    config.global_volume = None
-    config.load_yaml(config.default_yaml)
-    assert_defaults()
-
-
-def test_can_set_values_from_yaml():
-    yaml = dedent(
-        """
-        sample_rate: 48000
-        buffer_size: 512
-        global_volume: 0.66
-        """
-    ).strip()
-    config.load_yaml(yaml)
-    assert config.sample_rate == 48000
-    assert config.buffer_size == 512
-    assert config.global_volume == 0.66
-
-
 def test_types_are_correctly_cast_from_yaml():
     yaml = dedent(
         """
-        global_volume: 1
+        audio:
+          global_volume: 1
         """
     ).strip()
-    config.load_yaml(yaml)
-    assert type(config.global_volume) is float
-    assert config.global_volume == 1.0
+    with open(loader.get_config_file_path(), "w") as cfg_file:
+        cfg_file.write(yaml)
+    test_config = loader.load_config()
+    assert type(test_config.audio.global_volume) is float
+    assert test_config.audio.global_volume == 1.0

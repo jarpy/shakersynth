@@ -4,23 +4,25 @@ import logging
 import pyo
 import sys
 import time
-from shakersynth.config import config
+from shakersynth.config.loader import create_default_config_file, load_config
 from shakersynth.aircraft.aircraft import Aircraft
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
 
+config = load_config()
 logging.basicConfig()
 log = logging.getLogger("main")
-log.setLevel(config.log_level)
+log.setLevel(config.log.level)
 
 
 def main():
     print("\n" + "-" * 35 + "Shakersynth" + "-" * 35)
+    create_default_config_file()
     # Audio synthesis setup.
     server = pyo.Server(
         nchnls=2,
         duplex=0,
-        buffersize=config.buffer_size,
-        sr=config.sample_rate
+        buffersize=config.audio.buffer_size,
+        sr=config.audio.sample_rate
     )
     server.setVerbosity(1)
 
@@ -46,7 +48,7 @@ def main():
 
     server.boot()
     server.start()
-    server.setAmp(config.global_volume)
+    server.setAmp(config.audio.global_volume)
 
     # Receive Telemetry from the Shakersynth DCS export script.
     receiver = ShakersynthReceiver()

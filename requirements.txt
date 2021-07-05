@@ -7,6 +7,7 @@ pyo
 pytest
 pytest-cov
 pytest-watch
+python-configuration[yaml]
 pyyaml
 types-PyYAML
 twine

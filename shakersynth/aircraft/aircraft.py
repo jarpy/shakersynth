@@ -1,10 +1,11 @@
 import logging
 from shakersynth.synth.rotor import RotorSynth
-from shakersynth.config import config
+from shakersynth.config import loader
 from typing import Dict  # noqa: F401
 
+config = loader.load_config()
 log = logging.getLogger(__name__)
-log.setLevel(config.log_level)
+log.setLevel(config.log.level)
 
 helicopters = ['mi-8mt', 'mi-24p', 'uh-1h']
 fixed_wings = ['a10-c_2']
@@ -23,8 +24,11 @@ class Aircraft:
         self.synths = []
         self.is_running = False
 
-        if self.module in helicopters:
-            self.synths.append(RotorSynth())
+        if module in helicopters:
+            if config.modules[module].effects.rotor.enabled:
+                self.synths.append(RotorSynth())
+            else:
+                log.info(f"Rotor effect disabled for {module}.")
 
     def update(self, telemetry: dict) -> None:
         """Update all synths with the `telemetry` payload."""
