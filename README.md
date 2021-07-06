@@ -31,7 +31,7 @@ real-time synthesis approach.
 Over time, Shakersynth could support more effects and more aircraft, but the
 initial priority was to get a really good rotor effect for helicopters.
 
-### Trying it out
+### Installation
 
 Shakersynth is a basic, text-mode application with no GUI. Getting it running
 is a little bit fiddly. Sorry about that.
