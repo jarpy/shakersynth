@@ -1,3 +1,8 @@
+- 0.7.0
+  - Fix no in effect Mi-24P (missing in export script).
+  - Automatically install and update the export script.
+  - New config system. Disable/enable individual effects.
+
 - 0.6.1
   - Don't apply rotor effect to fixed-wing aircraft.
 
