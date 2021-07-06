@@ -3,7 +3,8 @@ import os
 import platform
 from typing import Callable
 
-from config import ConfigurationSet, config_from_env, config_from_yaml
+from config import config_from_env, config_from_yaml
+from config import ConfigurationSet as Conf
 from textwrap import dedent
 
 
@@ -47,23 +48,26 @@ default_yaml = dedent(
     ).strip()
 
 if platform.system() == 'Windows':
-    config_dir = os.path.join(
-        os.environ['LOCALAPPDATA'],
-        'Shakersynth'
-    )
+    config_dir = os.path.join(os.environ['LOCALAPPDATA'], 'Shakersynth')
 else:
-    config_dir = os.path.join(
-        os.environ['HOME'],
-        '.shakersynth'
-    )
+    config_dir = os.path.join(os.environ['HOME'], '.shakersynth')
 
 
 def get_config_file_path() -> str:
+    """Return the path to configuration file.
+
+    The default path can be overridden with the "SHAKERSYNTH_CONFIG_FILE"
+    environment variable.
+    """
     default = os.path.join(config_dir, 'shakersynth.yml')
     return os.getenv("SHAKERSYNTH_CONFIG_FILE", default)
 
 
 def create_default_config_file() -> None:
+    """Creates the config file if it does not already exist.
+
+    The file is created at the location returned by `get_config_file_path()`.
+    """
     config_file_path = get_config_file_path()
     if not os.path.exists(config_dir):
         os.mkdir(config_dir)
@@ -73,21 +77,26 @@ def create_default_config_file() -> None:
             config_file.write(default_yaml)
 
 
-def mutate(conf: dict, key: str, func: Callable):
+def _mutate(conf: Conf, key: str, func: Callable) -> Conf:
     """Change the value of `conf[key]` by passing it to `func`."""
     conf[key] = func(conf[key])
     return conf
 
 
-def load_config():
+def load_config() -> Conf:
+    """Load the configuration from disk.
+
+    Loads whichever file is returned by `get_config_file_path()`.
+    Creates a default config file if one is not found.
+    """
     create_default_config_file()
     with open(get_config_file_path()) as f:
-        cfg = ConfigurationSet(
+        cfg = Conf(
             config_from_env("SHAKERSYNTH", separator="_", lowercase_keys=True),
             config_from_yaml(f.read()),
             config_from_yaml(default_yaml))
 
-    cfg = mutate(cfg, "audio.global_volume", lambda x: float(x))
-    cfg = mutate(cfg, "log.level", lambda x: getattr(logging, x.upper()))
+    cfg = _mutate(cfg, "audio.global_volume", lambda x: float(x))
+    cfg = _mutate(cfg, "log.level", lambda x: getattr(logging, x.upper()))
 
     return cfg

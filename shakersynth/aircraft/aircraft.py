@@ -19,7 +19,11 @@ class Aircraft:
     Calling `update` on the `Aircraft` causes each synth to also be updated.
     """
     def __init__(self, module: str):
-        """Create a new `Aircraft`, with a collection of synths."""
+        """Create a new `Aircraft`, with a collection of synths.
+
+        Only synths that are relevant to the module are added. For example,
+        helicopters receive a `RotorSynth`, but fixed-wing aircraft do not.
+        """
         self.module = module
         self.synths = []
         self.is_running = False
