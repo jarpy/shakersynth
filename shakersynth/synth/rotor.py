@@ -18,38 +18,37 @@ class RotorSynth():
 
         # Create two volume faders which we'll use to control
         # the volume of the effect.
-        self.fader0 = pyo.Fader()
-        self.fader1 = pyo.Fader()
+        self.faders = [pyo.Fader(), pyo.Fader()]
 
         # These Lorenz attractors create randomness, which we will use to
         # modulate the signal a little. It adds character and makes the
         # effect feel less repetitive.
-        self.lorenz0 = pyo.Lorenz(pitch=0.1)
-        self.lorenz0_scaled = pyo.Scale(self.lorenz0, outmin=0.3, outmax=0.9)
-        self.lorenz1 = pyo.Lorenz(pitch=0.11)  # Slightly different for stereo.
-        self.lorenz1_scaled = pyo.Scale(self.lorenz1, outmin=0.3, outmax=0.9)
+        #
+        # Make them slightly different to produce stereo.
+        self.lorenz = [pyo.Lorenz(pitch=0.1), pyo.Lorenz(pitch=0.11)]
+
+        # The raw lorenz attractors are too strong. Wrap them in scaling
+        # functions and use the scaled versions as our final modulation
+        # sources.
+        self.modulators = [
+            pyo.Scale(lorenz, outmin=0.3, outmax=0.9)
+            for lorenz in self.lorenz]
 
         # These are the actual signal sources. Volume is controlled by the
         # fader objects and the "sharpness" of the wave is modulated by the
-        # Lorenz attractors.
-        self.osc0 = pyo.LFO(
-            freq=0.0001,
-            sharp=self.lorenz0_scaled,
-            mul=self.fader0)
-        self.osc1 = pyo.LFO(
-            freq=0.0001,
-            sharp=self.lorenz1_scaled,
-            mul=self.fader1)
+        # scaled Lorenz attractors.
+        self.oscillators = [
+            pyo.LFO(freq=0.001, sharp=modulator, mul=fader)
+            for modulator, fader in zip(self.modulators, self.faders)]
 
         # Then we'll filter the signals so that only low frequencies are
         # sent to the shakers.
-        self.filter0 = pyo.Biquad(self.osc0, freq=200)
-        self.filter1 = pyo.Biquad(self.osc1, freq=200)
+        self.filters = [pyo.Biquad(osc, freq=200) for osc in self.oscillators]
 
         # Finally, hook the output of the filters up to the sound card's left
         # and right channels.
-        self.filter0.out(0)
-        self.filter1.out(1)
+        for i in [0, 1]:
+            self.filters[i].out(i)
 
     def update(self, telemetry: dict) -> None:
         """Update synth parameters based on `telemetry`.
@@ -80,26 +79,21 @@ class RotorSynth():
         revolutions_per_second = rpm / 60.0
 
         blades_per_second = revolutions_per_second * blade_count
-        log.debug(f"blades_per_second: {blades_per_second}")
-        self.osc0.setFreq(blades_per_second)
-        self.osc1.setFreq(blades_per_second)
+        [osc.setFreq(blades_per_second) for osc in self.oscillators]
 
         # Only apply the Lorenz attractor "pixie dust" when the
         # rotor is actually moving.
-        log.debug(f"Lorenz min: {min(0.3, blades_per_second)}")
-        log.debug(f"Lorenz max: {min(0.9, blades_per_second)}")
-        self.lorenz0_scaled.setOutMin(min(0.3, blades_per_second))
-        self.lorenz0_scaled.setOutMax(min(0.9, blades_per_second))
-        self.lorenz1_scaled.setOutMin(min(0.3, blades_per_second))
-        self.lorenz1_scaled.setOutMax(min(0.9, blades_per_second))
+        [modulator.setOutMin(min(0.3, blades_per_second))
+            for modulator in self.modulators]
+        [modulator.setOutMax(min(0.9, blades_per_second))
+            for modulator in self.modulators]
 
     def start(self) -> None:
         """Start the `RotorSynth`, activating audio output."""
         if self.is_running:
             return
         log.debug("Started.")
-        self.fader0.play()
-        self.fader1.play()
+        [fader.play() for fader in self.faders]
         self.is_running = True
 
     def stop(self) -> None:
@@ -107,8 +101,7 @@ class RotorSynth():
         if not self.is_running:
             return
         log.debug("Stopped.")
-        self.fader0.stop()
-        self.fader1.stop()
+        [fader.stop() for fader in self.faders]
         self.is_running = False
 
     def _calculate_rotor_rpm(self, telemetry: dict) -> float:
