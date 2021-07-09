@@ -1,5 +1,8 @@
+- 0.7.1
+  - Really (really!) fix no effect in Mi-24P.
+
 - 0.7.0
-  - Fix no in effect Mi-24P (missing in export script).
+  - Fix no effect in Mi-24P (missing in export script).
   - Automatically install and update the export script.
   - New config system. Disable/enable individual effects.
 

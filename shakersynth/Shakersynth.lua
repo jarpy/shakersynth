@@ -36,7 +36,7 @@ function LuaExportAfterNextFrame()
 
    -- Read rotor RPM percentage from the gauge.
    local rotor_rpm_percent = 0
-   if module == "Mi-8MT" then
+   if module == "Mi-8MT" or module == "Mi-24P" then
       rotor_rpm_percent = main_panel:get_argument_value(42) * 100
    elseif module == "UH-1H" then
       rotor_rpm_percent = main_panel:get_argument_value(123) * 100
