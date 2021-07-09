@@ -1,3 +1,6 @@
+- 0.7.2
+  - Fix python package not including Shakersynth.lua
+
 - 0.7.1
   - Really (really!) fix no effect in Mi-24P.
 
