@@ -1,7 +1,9 @@
 from shakersynth.aircraft.aircraft import Aircraft
-from shakersynth.aircraft.aircraft import helicopters, fixed_wings
 from shakersynth.synth.rotor import RotorSynth
 from pytest import fixture
+
+helicopters = ['mi-8mt', 'mi-24p', 'uh-1h']
+fixed_wings = ['a10-c_2']
 
 
 @fixture
