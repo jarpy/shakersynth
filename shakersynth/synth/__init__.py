@@ -6,5 +6,5 @@ It must also implement the `update`, `start`, and `stop` methods.
 `update` must accept a telemetry dictionary.
 `start` and `stop` take no arguments.
 
-Refer to `RotorSynth` for an example.
+Refer to `shakersynth.synth.rotor.RotorSynth` for an example.
 """
