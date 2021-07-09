@@ -34,4 +34,5 @@ setuptools.setup(
         'pyaml',
         'wxPython',
     ],
-    scripts=['bin/shakersynth.bat'])
+    scripts=['bin/shakersynth.bat'],
+    include_package_data=True)
