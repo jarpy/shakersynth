@@ -1,3 +1,17 @@
 steps:
   - command: "pip install --editable . && pytest -v"
-    label: pytest
+    label: Test
+    agents:
+      image: jarpy/shakersynth
+  - command: "mypy ."
+    label: Type Check
+    agents:
+      image: jarpy/shakersynth
+  - command: "flake8"
+    label: Lint
+    agents:
+      image: jarpy/shakersynth
+  - command: "make install"
+    label: Package
+    agents:
+      image: jarpy/shakersynth
