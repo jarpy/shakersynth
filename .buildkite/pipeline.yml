@@ -1,15 +1,3 @@
-agents:
-  image: jarpy/shakersynth
-
 steps:
-  - label: Test
-    command: "pip install --editable . && pytest -v"
-
-  - label: Type Check
-    command: "mypy ."
-
-  - label: Lint
-    command: "flake8"
-
-  - label: Package
-    command: "make install"
+  - label: Pipeline Upload Stage 2
+    command: "buildkite-agent pipeline upload .buildkite/pipeline-stage2.yml"
