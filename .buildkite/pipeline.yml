@@ -1,2 +1,3 @@
 steps:
-  - command: "echo Bobble"
+  - command: "pip install --editable . && pytest -v"
+    label: pytest
