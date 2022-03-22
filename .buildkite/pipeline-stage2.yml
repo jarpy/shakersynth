@@ -2,6 +2,9 @@ agents:
   image: jarpy/shakersynth
 
 steps:
+  - label: Env
+    command: "env | cut -f1 -d="
+
   - label: Test
     command: "pip install --editable . && pytest -v"
 
@@ -13,3 +16,4 @@ steps:
 
   - label: Package
     command: "make install"
+
