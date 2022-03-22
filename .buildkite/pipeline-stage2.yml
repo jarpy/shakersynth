@@ -3,7 +3,7 @@ agents:
 
 steps:
   - label: Env
-    command: "env | cut -f1 -d="
+    command: "env | cut -f1 -d= | sort"
 
   - label: Test
     command: "pip install --editable . && pytest -v"
