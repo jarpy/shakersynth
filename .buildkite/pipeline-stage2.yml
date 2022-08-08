@@ -4,8 +4,8 @@ agents:
 steps:
   - label: Go Choco
     command:
-      - "Set-ExecutionPolicy Bypass -Scope Process -Force"
-      - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
-      - "iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
+      - powershell.exe -noexit "Set-ExecutionPolicy Bypass -Scope Process -Force"
+      - powershell.exe -noexit "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
+      - powershell.exe -noexit "iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
 
