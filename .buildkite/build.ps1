@@ -2,6 +2,6 @@
 #choco install -y python
 #refreshenv
 
-Env:PATH += ";C:\Python310\bin;C:\Python310\scripts"
+$Env:PATH += ";C:\Python310\bin;C:\Python310\scripts"
 pip install -r requirements.txt
 pytest
