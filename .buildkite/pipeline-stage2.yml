@@ -2,18 +2,10 @@ agents:
   queue: jarpy
 
 steps:
-  - label: Env
-    command: "env | cut -f1 -d= | sort"
+  - label: Go Choco
+    command:
+      - "Set-ExecutionPolicy Bypass -Scope Process -Force"
+      - "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
+      - "iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
-  - label: Test
-    command: "pip install --editable . && pytest -v"
-
-  - label: Type Check
-    command: "mypy ."
-
-  - label: Lint
-    command: "flake8"
-
-  - label: Package
-    command: "make install"
 
