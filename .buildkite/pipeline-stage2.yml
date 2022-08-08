@@ -8,4 +8,14 @@ steps:
       - powershell.exe -noexit "[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072"
       - powershell.exe -noexit "iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))"
 
+  - label: Get the snakes on the plane
+    command:
+      - powershell.exe -noexit "choco install -y python"
 
+  - label: Pip
+    command:
+      - powershell.exe -noexit "pip install pytest"
+
+  - label: Pytest
+    command:
+      - powershell.exe -noexit "pytest"
