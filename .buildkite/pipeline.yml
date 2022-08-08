@@ -1,3 +1,7 @@
+agents:
+  queue: jarpy
+
 steps:
-  - label: Pipeline Upload Stage 2
-    command: "buildkite-agent pipeline upload .buildkite/pipeline-stage2.yml"
+  - label: Do it
+    command:
+      - powershell.exe .buildkite/build.ps1

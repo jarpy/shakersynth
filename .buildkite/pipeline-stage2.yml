@@ -1,7 +1,0 @@
-agents:
-  queue: jarpy
-
-steps:
-  - label: Do it
-    command:
-      - powershell.exe .buildkite/build.ps1
