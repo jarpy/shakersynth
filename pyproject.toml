@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "shakersynth"
+version = "0.1.0"
+description = ""
+authors = ["Toby McLaughlin <toby@jarpy.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "~3.9.13"
+pyo = "^1.0.4"
+python-configuration = {extras = ["yaml"], version = "^0.8.2"}
+func-timeout = "^4.3.5"
+wxpython = "^4.2.0"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^6.5.0"
+flake8 = "^6.0.0"
+mypy = "^0.991"
+pdoc = "^12.3.0"
+pytest = "^7.2.0"
+pytest-cov = "^4.0.0"
+pytest-watch = "^4.2.0"
+types-pyyaml = "^6.0.12.2"
+
+[tool.poetry.scripts]
+shakersynth = "shakersynth.__main__:cli"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

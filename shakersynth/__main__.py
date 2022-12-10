@@ -109,7 +109,7 @@ def main():
             del(aircraft)
 
 
-if __name__ == "__main__":
+def cli():
     try:
         main()
     except KeyboardInterrupt:
