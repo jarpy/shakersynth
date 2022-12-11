@@ -1,5 +1,6 @@
-import pyo
 import os
+
+import pyo  # type: ignore
 
 from shakersynth.config.loader import default_yaml
 

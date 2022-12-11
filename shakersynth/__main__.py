@@ -3,12 +3,14 @@
 import logging
 import os
 import platform
-import pyo
 import sys
 import time
 from importlib.resources import read_text
-from shakersynth.config.loader import create_default_config_file, load_config
+
+import pyo  # type: ignore
+
 from shakersynth.aircraft.aircraft import Aircraft
+from shakersynth.config.loader import create_default_config_file, load_config
 from shakersynth.receiver.shakersynth import ShakersynthReceiver
 
 config = load_config()
@@ -106,7 +108,7 @@ def main():
             aircraft.stop()
             running = aircraft.is_running
             time.sleep(0.1)
-            del(aircraft)
+            del aircraft
 
 
 def cli():
