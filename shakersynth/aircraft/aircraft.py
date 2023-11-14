@@ -1,5 +1,6 @@
 import logging
 from shakersynth.synth.rotor import RotorSynth
+from shakersynth.synth.gun import GunSynth
 from shakersynth.config import loader
 
 config = loader.load_config()
@@ -8,9 +9,11 @@ log.setLevel(config.log.level)
 
 synth_map: dict = {
     "a10-c_2": [],
-    "mi-24p": [RotorSynth],
+    # "mi-24p": [GunSynth, RotorSynth],
+    "mi-24p": [GunSynth],
     "mi-8mt": [RotorSynth],
     "uh-1h": [RotorSynth],
+    "p-51d": [GunSynth],
 }
 
 

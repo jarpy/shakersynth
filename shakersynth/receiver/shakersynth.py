@@ -1,5 +1,6 @@
 import logging
 import socket
+import time
 import yaml
 from func_timeout import func_set_timeout, FunctionTimedOut  # type: ignore
 from shakersynth.config import loader
@@ -37,6 +38,7 @@ class ShakersynthReceiver():
         """
         try:
             payload = self._receive_udp()
+            timestamp_ns = time.time_ns()
             self.packet_count += 1
         except FunctionTimedOut:
             log.debug('No telemetry...')
@@ -47,6 +49,8 @@ class ShakersynthReceiver():
         # relatively expensive, but we have cycles to spare here in the Python
         # world.
         telemetry = yaml.safe_load(payload.decode())
+        telemetry["time_ns"] = timestamp_ns
+        telemetry["time"] = timestamp_ns / 1000 / 1000 / 1000
 
         # Capital letters hurt your hands.
         try:

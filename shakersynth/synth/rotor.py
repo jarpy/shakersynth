@@ -3,13 +3,14 @@ import logging
 import pyo  # type: ignore
 
 from shakersynth.config import loader
+from shakersynth.synth.synth import Synth
 
 config = loader.load_config()
 log = logging.getLogger(__name__)
 log.setLevel(config.log.level)
 
 
-class RotorSynth():
+class RotorSynth(Synth):
     """Effect synthesizer for helicopter rotor vibrations.
 
     This a stereo (2 channel) effect.

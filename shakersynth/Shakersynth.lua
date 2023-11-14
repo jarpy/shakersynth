@@ -45,12 +45,17 @@ function LuaExportAfterNextFrame()
       rotor_rpm_percent = 0
    end
 
+   -- Count the rounds in the gun.
+   local gun_rounds = LoGetPayloadInfo().Cannon.shells
+
    local payload = string.format(
       "---\n" ..
          "module: %s\n" ..
-         "rotor_rpm_percent: %.16f\n",
+         "rotor_rpm_percent: %.16f\n" ..
+         "gun_rounds: %s\n",
       module,
-      rotor_rpm_percent
+      rotor_rpm_percent,
+      gun_rounds
    )
 
    socket.try(shksynsocket:send(payload))
