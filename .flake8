@@ -1,0 +1,2 @@
+[flake8]
+exclude = .git,.eggs,.venv,build,dist,__pycache__,Shakersynth.egg-info,mypy_cache,.pytest_cache

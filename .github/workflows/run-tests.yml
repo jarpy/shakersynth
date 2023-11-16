@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.7, 3.8, 3.9]
+        python-version: [3.9]
 
     steps:
     - uses: actions/checkout@v2
@@ -24,18 +24,17 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        pip install -r requirements.txt
+    - name: Install Poetry
+      run: pip install poetry
     - name: Install Shakersynth
       run: |
-        pip install .
+        poetry install
     - name: Lint with flake8
       run: |
-        flake8 --config=setup.cfg
+        poetry run flake8
     - name: Check with mypy
       run: |
-        mypy --config-file=setup.cfg .
+        poetry run mypy .
     - name: Test with pytest
       run: |
-        pytest --cov=shakersynth
+        poetry run pytest --cov=shakersynth

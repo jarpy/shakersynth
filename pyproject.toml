@@ -10,6 +10,7 @@ python = "~3.9.13"
 pyo = "^1.0.4"
 python-configuration = {extras = ["yaml"], version = "^0.8.2"}
 func-timeout = "^4.3.5"
+PyYAML = "5.3.1"
 wxpython = "^4.2.0"
 
 [tool.poetry.group.dev.dependencies]
@@ -24,6 +25,12 @@ types-pyyaml = "^6.0.12.2"
 
 [tool.poetry.scripts]
 shakersynth = "shakersynth.__main__:cli"
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = false
+warn_unused_configs = true
+exclude = ".venv|build|dist|__pycache__|.eggs"
 
 [build-system]
 requires = ["poetry-core"]
