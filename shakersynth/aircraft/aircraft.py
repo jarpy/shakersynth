@@ -1,5 +1,6 @@
 import logging
 from shakersynth.synth.rotor import RotorSynth
+from shakersynth.synth.bump import BumpSynth
 from shakersynth.config import loader
 
 config = loader.load_config()
@@ -10,7 +11,7 @@ synth_map: dict = {
     "a10-c_2": [],
     "mi-24p": [RotorSynth],
     "mi-8mt": [RotorSynth],
-    "uh-1h": [RotorSynth],
+    "uh-1h": [RotorSynth, BumpSynth],
 }
 
 
