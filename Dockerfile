@@ -1,16 +1,19 @@
-FROM python:3.10
+# This Dockerfile builds an image that can be used as a basic development
+# environment for ShakerSynth.
+
+FROM python:3.9-bullseye
 WORKDIR /shakersynth
-COPY requirements.txt /shakersynth/
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get update
+RUN apt-get install -y \
       build-essential \
       portaudio19-dev \
       libsndfile1-dev \
       libportmidi-dev \
       liblo-dev \
-      libgtk-3-dev && \
-    pip install -r requirements.txt && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+      libgtk-3-dev \
+      vim
+RUN pip install poetry
+COPY . /shakersynth/
+RUN poetry install
 
 ENTRYPOINT ["/bin/bash"]
