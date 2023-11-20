@@ -11,6 +11,7 @@ synth_map: dict = {
     "a10-c_2": [],
     "mi-24p": [RotorSynth, BumpSynth],
     "mi-8mt": [RotorSynth, BumpSynth],
+    "ka-50": [RotorSynth, BumpSynth],
     "uh-1h": [RotorSynth, BumpSynth],
 }
 

@@ -41,6 +41,9 @@ function LuaExportAfterNextFrame()
 
    if module == "Mi-8MT" or module == "Mi-24P" then
       rotor_rpm_percent = main_panel:get_argument_value(42) * 100
+   elseif module == "Ka-50" then
+      rotor_rpm_percent = main_panel:get_argument_value(52) * 100
+	  doors = string.format("%.2f", main_panel:get_argument_value(533))
    elseif module == "UH-1H" then
       rotor_rpm_percent = main_panel:get_argument_value(123) * 100
       doors = string.format(

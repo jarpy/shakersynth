@@ -38,6 +38,12 @@ default_yaml = dedent(
             enabled: true
           bump:
             enabled: true
+      ka-50:
+        effects:
+          rotor:
+            enabled: true
+          bump:
+            enabled: true
       mi-24p:
         effects:
           rotor:

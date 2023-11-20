@@ -21,7 +21,7 @@ class RotorSynth():
 
         Supports the "mi-8mt", "mi-24p", and "uh-1h" modules.
         """
-        if module not in ["mi-8mt", "mi-24p", "uh-1h"]:
+        if module not in ["ka-50", "mi-8mt", "mi-24p", "uh-1h"]:
             raise ValueError
         self.module = module
         self.is_running = False
@@ -71,7 +71,9 @@ class RotorSynth():
                 " when running {module}.")
             return
 
-        if (self.module == "mi-8mt" or self.module == "mi-24p"):
+        if (self.module == "ka-50"):
+            blade_count = 3  # actually 2 rotors with 3 blades each
+        elif (self.module == "mi-8mt" or self.module == "mi-24p"):
             blade_count = 5
         elif (self.module == "uh-1h"):
             blade_count = 2
@@ -117,7 +119,10 @@ class RotorSynth():
 
     def _calculate_rotor_rpm(self, rpm_percent: float) -> float:
         """Given `rpm_percent` return the true RPM of the rotor."""
-        if (self.module == "mi-8mt"):
+        if (self.module == "ka-50"):
+            # counted 20 rounds in 1/16 slowmo -> 320 RPM @ 93%
+            return float(rpm_percent * (320 / 93))
+        elif (self.module == "mi-8mt"):
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
             # But 200 gives better synchronization in the sim.
             return float(rpm_percent * (200 / 95))
