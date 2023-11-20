@@ -32,13 +32,13 @@ default_yaml = dedent(
 
     # Configuration of individual modules and effects.
     modules:
-      uh-1h:
+      ka-50:
         effects:
           rotor:
             enabled: true
           bump:
             enabled: true
-      ka-50:
+      mi-8mt:
         effects:
           rotor:
             enabled: true
@@ -50,7 +50,25 @@ default_yaml = dedent(
             enabled: true
           bump:
             enabled: true
-      mi-8mt:
+      sa342m:
+        effects:
+          rotor:
+            enabled: true
+          bump:
+            enabled: true
+      sa342l:
+        effects:
+          rotor:
+            enabled: true
+          bump:
+            enabled: true
+      sa342minigun:
+        effects:
+          rotor:
+            enabled: true
+          bump:
+            enabled: true
+      uh-1h:
         effects:
           rotor:
             enabled: true

@@ -9,9 +9,12 @@ log.setLevel(config.log.level)
 
 synth_map: dict = {
     "a10-c_2": [],
+    "ka-50": [RotorSynth, BumpSynth],
     "mi-24p": [RotorSynth, BumpSynth],
     "mi-8mt": [RotorSynth, BumpSynth],
-    "ka-50": [RotorSynth, BumpSynth],
+    "sa342m": [RotorSynth, BumpSynth],
+    "sa342l": [RotorSynth, BumpSynth],
+    "sa342minigun": [RotorSynth, BumpSynth],
     "uh-1h": [RotorSynth, BumpSynth],
 }
 

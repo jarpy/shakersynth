@@ -44,6 +44,15 @@ function LuaExportAfterNextFrame()
    elseif module == "Ka-50" then
       rotor_rpm_percent = main_panel:get_argument_value(52) * 100
 	  doors = string.format("%.2f", main_panel:get_argument_value(533))
+   elseif module == "SA342M" 
+		or module == "SA342L" 
+		or module == "SA342Minigun" then
+	  rotor_rpm_percent = (main_panel:get_argument_value(52) - 0.096) * 110  -- guage scale: 0.096 - 0.904
+      doors = string.format(
+        "%.2f, %.2f",
+        main_panel:get_argument_value(533),
+        main_panel:get_argument_value(532)
+      )
    elseif module == "UH-1H" then
       rotor_rpm_percent = main_panel:get_argument_value(123) * 100
       doors = string.format(
@@ -69,7 +78,7 @@ function LuaExportAfterNextFrame()
    local payload = string.format(
       "---\n" ..
       "module: %s\n" ..
-      "rotor_rpm_percent: %.16f\n" ..
+      "rotor_rpm_percent: %.4f\n" ..
 	  "ammo: [%s]\n" ..
 	  "doors: [%s]\n",
       module,
