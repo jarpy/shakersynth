@@ -24,3 +24,7 @@ install:
 
 publish: build
 	poetry publish
+
+run: build
+	poetry run shakersynth
+
