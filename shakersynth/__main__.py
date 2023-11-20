@@ -48,6 +48,7 @@ def main():
         buffersize=config.audio.buffer_size,
         sr=config.audio.sample_rate
     )
+    server.deactivateMidi()
     server.setVerbosity(1)
 
     # Map audio outputs from internal numbers (which can be sparse and large)
