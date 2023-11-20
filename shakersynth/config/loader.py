@@ -43,13 +43,13 @@ default_yaml = dedent(
           rotor:
             enabled: true
           bump:
-            enabled: false
+            enabled: true
       mi-8mt:
         effects:
           rotor:
             enabled: true
           bump:
-            enabled: false
+            enabled: true
     """
     ).strip()
 

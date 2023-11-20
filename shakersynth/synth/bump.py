@@ -17,13 +17,16 @@ class BumpSynth:
         self.module = module
         self.is_running = False
 
-        # fader to control the volume-envelope of the effect
-        self.env = pyo.Fader(fadein=.01, fadeout=.1, dur=.11)
+        # AR envelope to control the volume of the effect
+        self.env = pyo.Adsr(decay=0, sustain=1)
+        self.env.setExp(1.2)
         # as well as a low-frequency-oscilator to get things swinging
         self.osc = pyo.LFO(freq=[1, 1], mul=self.env)
         # and finally - a low pass, to protect our shakers
-        filters = pyo.Biquad(self.osc, freq=200).out()
+        self.filters = pyo.Biquad(self.osc, freq=200)
+        self.filters.out()
 
+        self.time_last = 0
         self.total_ammo_last = 0
         self.doors_open_last = 0
 
@@ -33,8 +36,15 @@ class BumpSynth:
             return
         if not config.modules[self.module].effects.bump.enabled:
             return
-        log.debug("BumpSynth Started.")
+        log.debug("Started.")
         self.is_running = True
+
+    def stop(self) -> None:
+        """Stop the `BumpSynth`, deactivating audio output."""
+        if not self.is_running:
+            return
+        log.debug("Stopped.")
+        self.is_running = False
 
     def update(self, telemetry: dict) -> None:
 
@@ -50,12 +60,11 @@ class BumpSynth:
             total_ammo_change = total_ammo - self.total_ammo_last
             if total_ammo_change != 0:
                 self.total_ammo_last = total_ammo
-                log.debug(f"ammo count changed to: %d" % total_ammo)
                 if total_ammo_change > 0:
                     log.debug(f"loaded %d more ammo." % total_ammo_change)
                 else:
                     log.debug(f"used %d ammo." % -total_ammo_change)
-                    self._play_bump(40,0.01,0.02)  # very small bump, this is just WiP
+                    self._play_bump(0.7, 0.01, 0.02)  # short spike, this is just WiP TODO: needs rate of fire
 
         if 'doors' in telemetry:
             # process doors - everything >0 counts as open
@@ -65,21 +74,16 @@ class BumpSynth:
                 self.doors_open_last = doors_open
                 if doors_open_change > 0:
                     log.debug(f"%d doors opened." % doors_open_change)
-                    self._play_bump(50,0.01,0.03)  # small bump - just unlocking the door
+                    self._play_bump(0.6, 0.01, 0.05)  # small bump - just unlocking the door
                 else:
                     log.debug(f"%d doors closed." % -doors_open_change)  # big bump
-                    self._play_bump(44,0.01,0.1)  # medium impact, door connects to the fuselage
+                    self._play_bump(0.8, 0.01, 0.1)  # medium impact, door connects to the fuselage
 
-    def stop(self) -> None:
-        """Stop the `BumpSynth`, deactivating audio output."""
-        if not self.is_running:
-            return
-        log.debug("BumpSynth Stopped.")
-        self.env.stop()
-        self.is_running = False
-
-    def _play_bump(self, freq=40, attack=0.01, release=0.1):
-        self.osc.freq = [freq, freq * 1.001]
-        self.env.fadein = attack
-        self.env.fadeout = release
+    def _play_bump(self, volume: float=1.0, attack: float=0.01, release: float=0.1, freq: float=45.0) -> None:
+        log.debug(f"playing a %.1fHz bump with vol=%.2f A=%.2f R=%.2f" % (freq, volume, attack, release))
+        self.osc.freq = [freq, freq * .998]
+        self.env.attack = attack
+        self.env.release = release
+        self.env.dur = attack + release
+        self.env.mul = volume
         self.env.play()
