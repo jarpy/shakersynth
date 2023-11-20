@@ -36,7 +36,7 @@ function LuaExportAfterNextFrame()
 
    -- Read rotor RPM percentage from the gauge #TODO: use loEngineInfo()?
    local rotor_rpm_percent = 0
-   local doors = ""  -- array of open doors (float)
+   local doors = "0"  -- array of open doors (float)
    local ammo = "0" -- string that will be sent [%s] as a yaml array
 
    if module == "Mi-8MT" or module == "Mi-24P" then
