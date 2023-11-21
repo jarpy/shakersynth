@@ -1,26 +1,30 @@
 default: test lint
 
-docs:
-	pdoc shakersynth
+docs: install
+	poetry run pdoc shakersynth
 
-test:
-	pytest --cov=shakersynth --cov-report=html
+test: install
+	poetry run pytest --cov=shakersynth --cov-report=html
 
-lint:
-	flake8 --config=setup.cfg
-	mypy --config-file=setup.cfg .
+lint: install
+	poetry run flake8
+	poetry run mypy .
 
-test-watch:
-	pytest-watch --beforerun=clear --runner='make'
+test-watch: install
+	poetry run pytest-watch --beforerun=clear --runner='make'
 
 clean:
 	rm -rf build dist
 
-package: clean
-	python3 setup.py sdist bdist_wheel
+build: install clean
+	poetry build
 
-install: package
-	pip install dist/Shakersynth*.tar.gz
+install:
+	poetry install
 
-publish: package
-	python3 -m twine upload dist/*
+publish: build
+	poetry publish
+
+run: build
+	poetry run shakersynth
+
