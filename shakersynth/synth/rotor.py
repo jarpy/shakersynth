@@ -21,7 +21,7 @@ class RotorSynth():
 
         Supports the "mi-8mt", "mi-24p", and "uh-1h" modules.
         """
-        if module not in ["mi-8mt", "mi-24p", "uh-1h"]:
+        if module not in ["ka-50", "mi-8mt", "mi-24p", "sa342m", "sa342l", "sa342minigun", "uh-1h"]:
             raise ValueError
         self.module = module
         self.is_running = False
@@ -71,9 +71,11 @@ class RotorSynth():
                 " when running {module}.")
             return
 
-        if (self.module == "mi-8mt" or self.module == "mi-24p"):
+        if self.module in ["ka-50", "sa342m", "sa342l", "sa342minigun"]:
+            blade_count = 3  # ka-50 actually has 2 rotors with 3 blades each
+        elif self.module in ["mi-8mt", "mi-24p"]:
             blade_count = 5
-        elif (self.module == "uh-1h"):
+        elif self.module == "uh-1h":
             blade_count = 2
 
         rpm_percent = telemetry.get("rotor_rpm_percent", 0)
@@ -117,14 +119,20 @@ class RotorSynth():
 
     def _calculate_rotor_rpm(self, rpm_percent: float) -> float:
         """Given `rpm_percent` return the true RPM of the rotor."""
-        if (self.module == "mi-8mt"):
+        if self.module == "ka-50":
+            # counted 20 rounds in 1/16 slowmo -> 320 RPM @ 93%
+            return float(rpm_percent * (320 / 93))
+        elif self.module == "mi-8mt":
             # 95 gauge RPM == 192 real rotor RPM. [1, 2]
             # But 200 gives better synchronization in the sim.
             return float(rpm_percent * (200 / 95))
-        elif (self.module == "mi-24p"):
+        elif self.module == "mi-24p":
             # 280 gives good sync on the Hind.
             return float(rpm_percent * (280 / 95))
-        elif (self.module == "uh-1h"):
+        elif self.module in ["sa342m", "sa342l", "sa342minigun"]:
+            # from file SA342/Cockpit/mainpanel_init.lua
+            return float(rpm_percent * (450 / 90))
+        elif self.module == "uh-1h":
             # 90 gauge RPM == 324 real rotor RPM. [3]
             return float(rpm_percent * (324 / 90))
         else:
