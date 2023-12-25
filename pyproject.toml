@@ -2,7 +2,10 @@
 name = "shakersynth"
 version = "0.1.0"
 description = ""
-authors = ["Toby McLaughlin <toby@jarpy.net>"]
+authors = [
+    "Nina Dowland <nina@jarpy.net>",
+    "LMG <lmg@kishalmi.net>",
+]
 readme = "README.md"
 
 [tool.poetry.dependencies]
